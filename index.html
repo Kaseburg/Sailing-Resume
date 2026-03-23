@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Athlete Name] — Sailing Recruit, Class of 2027</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ─────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #1a1a2e;
+      background: #fdfdfd;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Color Palette ────────────────────────────────── */
+    :root {
+      --navy: #0b1d3a;
+      --navy-light: #132d5e;
+      --gold: #c5a44e;
+      --gold-light: #e2c96d;
+      --white: #ffffff;
+      --off-white: #f5f6fa;
+      --text: #1a1a2e;
+      --text-light: #5a5a72;
+    }
+
+    /* ── Sticky Navigation ────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--navy);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+    nav .brand {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: .5px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav ul li a {
+      color: var(--white);
+      font-size: .85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      transition: color .2s;
+    }
+    nav ul li a:hover { color: var(--gold); }
+    nav .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+    }
+    nav .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: .3s;
+    }
+
+    /* ── Section Shared ───────────────────────────────── */
+    section { padding: 4rem 2rem; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .section-title {
+      font-family: 'Lora', serif;
+      font-size: 1.8rem;
+      color: var(--navy);
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 3px;
+      background: var(--gold);
+      margin-top: .4rem;
+    }
+
+    /* ── Hero Section ─────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--white);
+      background: var(--navy) url('[hero-background-image.jpg]') center/cover no-repeat;
+      padding: 6rem 2rem;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(11,29,58,.75);
+    }
+    #hero .hero-content { position: relative; z-index: 1; }
+    #hero h1 {
+      font-family: 'Lora', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: .3rem;
+    }
+    #hero .tagline {
+      font-size: 1.15rem;
+      color: var(--gold-light);
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+    }
+    #hero .details {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .6rem 1.5rem;
+      font-size: .95rem;
+      opacity: .9;
+    }
+    #hero .details span { white-space: nowrap; }
+
+    /* ── Quick Stats ──────────────────────────────────── */
+    #stats { background: var(--navy); color: var(--white); padding: 2.5rem 2rem; }
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .stat-card {
+      text-align: center;
+      min-width: 140px;
+    }
+    .stat-card .number {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1.2;
+    }
+    .stat-card .label {
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: .8;
+      margin-top: .2rem;
+    }
+
+    /* ── About ────────────────────────────────────────── */
+    #about { background: var(--off-white); }
+    .about-grid {
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-start;
+    }
+    .headshot-placeholder {
+      flex-shrink: 0;
+      width: 200px;
+      height: 250px;
+      background: var(--navy-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: .85rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .about-text p { margin-bottom: 1rem; color: var(--text-light); }
+
+    /* ── Academics ─────────────────────────────────────── */
+    #academics { background: var(--white); }
+    .academics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+    }
+    .acad-card {
+      background: var(--off-white);
+      border-left: 4px solid var(--gold);
+      padding: 1.2rem 1.4rem;
+      border-radius: 4px;
+    }
+    .acad-card .acad-label {
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-light);
+      margin-bottom: .25rem;
+    }
+    .acad-card .acad-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* ── Tables (Results & Schedule) ──────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    thead { background: var(--navy); color: var(--white); }
+    th, td {
+      padding: .75rem 1rem;
+      text-align: left;
+      font-size: .9rem;
+    }
+    th {
+      font-weight: 600;
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    tbody tr { border-bottom: 1px solid #e0e0e0; }
+    tbody tr:nth-child(even) { background: var(--off-white); }
+
+    /* ── Results ───────────────────────────────────────── */
+    #results { background: var(--off-white); }
+    .table-wrap { overflow-x: auto; }
+
+    /* ── Video ─────────────────────────────────────────── */
+    #video { background: var(--white); text-align: center; }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      max-width: 720px;
+      margin: 1rem auto 0;
+      background: var(--navy-light);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+
+    /* ── Schedule ──────────────────────────────────────── */
+    #schedule { background: var(--off-white); }
+
+    /* ── Contact ──────────────────────────────────────── */
+    #contact { background: var(--navy); color: var(--white); }
+    #contact .section-title { color: var(--white); }
+    #contact .section-title::after { background: var(--gold); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .contact-card h3 {
+      color: var(--gold);
+      margin-bottom: .5rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .contact-card p {
+      margin-bottom: .3rem;
+      font-size: .95rem;
+      opacity: .9;
+    }
+    .contact-card a { color: var(--gold-light); text-decoration: underline; }
+    .contact-card a:hover { color: var(--white); }
+
+    /* ── Footer ───────────────────────────────────────── */
+    footer {
+      background: #071225;
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: .8rem;
+    }
+    footer strong { color: var(--gold); }
+
+    /* ── Mobile Responsive ────────────────────────────── */
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--navy);
+        flex-direction: column;
+        padding: 1rem 2rem;
+        gap: .8rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,.3);
+      }
+      nav ul.open { display: flex; }
+      nav .menu-toggle { display: flex; }
+      #hero h1 { font-size: 2rem; }
+      #hero .tagline { font-size: 1rem; }
+      .about-grid { flex-direction: column; align-items: center; text-align: center; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .stat-card .number { font-size: 1.8rem; }
+      th, td { padding: .5rem .6rem; font-size: .8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav>
+    <div class="brand">[Athlete Name]</div>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('nav ul').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#academics">Academics</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================================
+       HERO SECTION
+       ============================================================ -->
+  <section id="hero">
+    <div class="hero-content">
+      <h1>[Athlete Name]</h1>
+      <p class="tagline">Class of 2027 &middot; [Skipper / Crew]</p>
+      <div class="details">
+        <span>[School Name]</span>
+        <span>[City, State]</span>
+        <span>[Height] &middot; [Weight]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       QUICK STATS
+       ============================================================ -->
+  <section id="stats">
+    <div class="container">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="number">[X.XX]</div>
+          <div class="label">GPA</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">[XXXX]</div>
+          <div class="label">SAT Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">[X]</div>
+          <div class="label">Years Varsity</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">[Yes/No]</div>
+          <div class="label">Team Captain</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT SECTION
+       ============================================================ -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-grid">
+        <div class="headshot-placeholder">[Headshot Image]</div>
+        <div class="about-text">
+          <p>
+            [I have been sailing competitively since age X and currently race with
+            the team at School Name. As a skipper/crew, I specialize in fleet
+            racing and team racing across FJ and CFJ classes. My goal is to
+            compete at the collegiate level while pursuing a degree in my
+            intended major.]
+          </p>
+          <p>
+            [Off the water, I am involved in activities/clubs/community service.
+            I bring leadership, dedication, and a strong work ethic both on and
+            off the racecourse.]
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ACADEMICS SECTION
+       ============================================================ -->
+  <section id="academics">
+    <div class="container">
+      <h2 class="section-title">Academics</h2>
+      <div class="academics-grid">
+        <div class="acad-card">
+          <div class="acad-label">Unweighted GPA</div>
+          <div class="acad-value">[X.XX]</div>
+        </div>
+        <div class="acad-card">
+          <div class="acad-label">Weighted GPA</div>
+          <div class="acad-value">[X.XX]</div>
+        </div>
+        <div class="acad-card">
+          <div class="acad-label">SAT Score</div>
+          <div class="acad-value">[XXXX]</div>
+        </div>
+        <div class="acad-card">
+          <div class="acad-label">ACT Score</div>
+          <div class="acad-value">[XX]</div>
+        </div>
+        <div class="acad-card">
+          <div class="acad-label">Intended Major</div>
+          <div class="acad-value">[Major]</div>
+        </div>
+        <div class="acad-card">
+          <div class="acad-label">Class Rank</div>
+          <div class="acad-value">[X of XXX]</div>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <h3 style="font-size:1rem;color:var(--navy);margin-bottom:.5rem;">AP &amp; Honors Courses</h3>
+        <p style="color:var(--text-light);font-size:.95rem;">
+          [AP Course 1], [AP Course 2], [AP Course 3], [Honors Course 1],
+          [Honors Course 2], [Honors Course 3]
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SAILING RESULTS SECTION
+       ============================================================ -->
+  <section id="results">
+    <div class="container">
+      <h2 class="section-title">Sailing Results</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Regatta</th>
+              <th>Division</th>
+              <th>Finish</th>
+              <th>Fleet Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>[Mar 2026]</td>
+              <td>[PCISA Golden Bear Regatta]</td>
+              <td>[A Division]</td>
+              <td>[3rd]</td>
+              <td>[24 boats]</td>
+            </tr>
+            <tr>
+              <td>[Feb 2026]</td>
+              <td>[PCISA South #4]</td>
+              <td>[A Division]</td>
+              <td>[5th]</td>
+              <td>[18 boats]</td>
+            </tr>
+            <tr>
+              <td>[Jan 2026]</td>
+              <td>[ISSA Baker Team Race Qualifier]</td>
+              <td>[Team Race]</td>
+              <td>[2nd]</td>
+              <td>[12 teams]</td>
+            </tr>
+            <tr>
+              <td>[Nov 2025]</td>
+              <td>[PCISA North-South Intersectional]</td>
+              <td>[B Division]</td>
+              <td>[1st]</td>
+              <td>[20 boats]</td>
+            </tr>
+            <tr>
+              <td>[Oct 2025]</td>
+              <td>[ISSA Mallory Qualifier — District 8]</td>
+              <td>[A Division]</td>
+              <td>[4th]</td>
+              <td>[16 boats]</td>
+            </tr>
+            <tr>
+              <td>[Sep 2025]</td>
+              <td>[PCISA Season Opener]</td>
+              <td>[A Division]</td>
+              <td>[2nd]</td>
+              <td>[22 boats]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIDEO SECTION
+       ============================================================ -->
+  <section id="video">
+    <div class="container">
+      <h2 class="section-title">Sailing Highlight Video</h2>
+      <div class="video-wrapper">
+        <!-- Replace the src below with your YouTube embed URL -->
+        <iframe
+          src="[https://www.youtube.com/embed/VIDEO_ID]"
+          title="Sailing Highlight Video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SCHEDULE SECTION
+       ============================================================ -->
+  <section id="schedule">
+    <div class="container">
+      <h2 class="section-title">Upcoming Schedule</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Event</th>
+              <th>Location</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>[Apr 5–6, 2026]</td>
+              <td>[PCISA South #6]</td>
+              <td>[Long Beach, CA]</td>
+              <td>[Skipper — A Division]</td>
+            </tr>
+            <tr>
+              <td>[Apr 18–19, 2026]</td>
+              <td>[PCISA Silver PCCs]</td>
+              <td>[San Francisco, CA]</td>
+              <td>[Skipper — A Division]</td>
+            </tr>
+            <tr>
+              <td>[May 2–3, 2026]</td>
+              <td>[PCISA Gold PCCs]</td>
+              <td>[Long Beach, CA]</td>
+              <td>[Skipper — A Division]</td>
+            </tr>
+            <tr>
+              <td>[May 16–17, 2026]</td>
+              <td>[ISSA Mallory National Championship]</td>
+              <td>[Annapolis, MD]</td>
+              <td>[Skipper — A Division]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT SECTION
+       ============================================================ -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>Athlete</h3>
+          <p><strong>[Athlete Name]</strong></p>
+          <p>[Phone Number]</p>
+          <p><a href="mailto:[athlete@email.com]">[athlete@email.com]</a></p>
+        </div>
+        <div class="contact-card">
+          <h3>Coach</h3>
+          <p><strong>[Coach Name]</strong></p>
+          <p>[School Name] Sailing Team</p>
+          <p>[Phone Number]</p>
+          <p><a href="mailto:[coach@email.com]">[coach@email.com]</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <p><strong>[Athlete Name]</strong> &middot; Class of 2027</p>
+    <p>Last updated [Month Year]</p>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT — Mobile Menu & Smooth Scroll Close
+       ============================================================ -->
+  <script>
+    // Close mobile menu when a nav link is clicked
+    document.querySelectorAll('nav ul li a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        document.querySelector('nav ul').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
