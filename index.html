@@ -238,10 +238,20 @@
     /* ── Hero CTA Buttons ── */
     .hero-cta {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       gap: .75rem;
       margin-top: 1.75rem;
+    }
+    .hero-cta-resume-stack {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+    .hero-cta .btn-outline {
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .btn {
       display: inline-block;
@@ -1425,6 +1435,7 @@
 
       // ── Links & Media ─────────────────────────────────────
       resumePDF: "#",
+      academicResumePDF: "#",
       videoURL: "",
       videoCaption: "[Race footage from Event Name, Date. Watch for tactical positioning at the start and mark roundings.]",
       heroImage: "images/hero.JPG",
@@ -1533,17 +1544,18 @@
             <div class="hero-stat-label">Unweighted GPA</div>
           </div>
           <div class="hero-stat">
-            <div class="hero-stat-value">${ATHLETE.yearsVarsity}</div>
-            <div class="hero-stat-label">Varsity Skipper</div>
+            <div class="hero-stat-value">Varsity Skipper</div>
           </div>
           <div class="hero-stat">
-            <div class="hero-stat-value">${ATHLETE.teamCaptain}</div>
-            <div class="hero-stat-label">Team Captain</div>
+            <div class="hero-stat-value">Team Captain</div>
           </div>
         </div>
 
         <div class="hero-cta">
-          <a href="${ATHLETE.resumePDF}" class="btn btn-primary" target="_blank" rel="noopener">Download Resume PDF</a>
+          <div class="hero-cta-resume-stack">
+            <a href="${ATHLETE.resumePDF}" class="btn btn-primary" target="_blank" rel="noopener">Sailing Resume PDF Download</a>
+            <a href="${ATHLETE.academicResumePDF}" class="btn btn-primary" target="_blank" rel="noopener">Academic Resume PDF Download</a>
+          </div>
           <a href="#contact" class="btn btn-outline">Contact Me</a>
         </div>
       `;
