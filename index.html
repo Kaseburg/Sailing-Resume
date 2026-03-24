@@ -4,320 +4,239 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>[Athlete Name] — Sailing Recruit, Class of 2027</title>
+  <meta name="description" content="Recruiting profile for [Athlete Name], Class of 2027 sailing recruit from [School Name]. Skipper/Crew competing in PCISA and ISSA events.">
+
+  <!-- Open Graph tags for link previews when coaches share the URL -->
+  <meta property="og:title" content="[Athlete Name] — Sailing Recruit, Class of 2027">
+  <meta property="og:description" content="[Position] · [School Name] · GPA: [X.XX] · SAT: [XXXX]">
+  <meta property="og:image" content="[URL to action photo]">
+  <meta property="og:url" content="https://kaseburg.github.io/Sailing-Resume">
+  <meta property="og:type" content="profile">
+
+  <!-- Favicon — inline SVG sailboat -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 L32 44 L8 44 Z' fill='%231B3A5C'/%3E%3Cpath d='M34 12 L34 44 L56 44 Z' fill='%23C9A84C'/%3E%3Cpath d='M4 48 Q32 40 60 48 L56 56 L8 56 Z' fill='%231B3A5C'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
   <style>
-    /* ── Reset & Base ─────────────────────────────────── */
+    /* ================================================================
+       CSS — PHASE 0 SCAFFOLDING
+       Mobile-first design, CSS custom properties, minimal resets
+       ================================================================ */
+
+    /* ── Reset ──────────────────────────────────────────── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 60px; }
     body {
-      font-family: 'Montserrat', sans-serif;
-      color: #1a1a2e;
-      background: #fdfdfd;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      color: var(--color-text);
+      background: var(--color-bg);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
 
-    /* ── Color Palette ────────────────────────────────── */
+    /* ── Color Palette ─────────────────────────────────── */
     :root {
-      --navy: #0b1d3a;
-      --navy-light: #132d5e;
-      --gold: #c5a44e;
-      --gold-light: #e2c96d;
-      --white: #ffffff;
-      --off-white: #f5f6fa;
-      --text: #1a1a2e;
-      --text-light: #5a5a72;
+      --color-primary: #1B3A5C;
+      --color-primary-light: #2A5A8C;
+      --color-accent: #C9A84C;
+      --color-accent-hover: #b8933e;
+      --color-bg: #FAFAFA;
+      --color-surface: #FFFFFF;
+      --color-text: #1A1A2E;
+      --color-text-muted: #6B7280;
+      --color-border: #E5E7EB;
+      --color-gold: #FFD700;
+      --color-silver: #C0C0C0;
+      --color-bronze: #CD7F32;
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --nav-height: 60px;
+      --max-width: 960px;
+      --section-pad-mobile: 3.5rem 1rem;
+      --section-pad-tablet: 5rem 2rem;
+      --section-pad-desktop: 6rem 2rem;
     }
 
-    /* ── Sticky Navigation ────────────────────────────── */
+    /* ── Shared Section Styles ─────────────────────────── */
+    .container { max-width: var(--max-width); margin: 0 auto; }
+    section { padding: var(--section-pad-mobile); }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      color: var(--color-primary);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+    }
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1.4em;
+      background: var(--color-accent);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── Scroll Reveal Animation ───────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .4s ease, transform .4s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Navigation ────────────────────────────────────── */
     nav {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: var(--navy);
-      padding: 0 2rem;
+      background: var(--color-primary);
+      height: var(--nav-height);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 60px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.3);
+      padding: 0 1rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.25);
     }
     nav .brand {
+      font-family: var(--font-heading);
       font-weight: 700;
       font-size: 1.1rem;
-      color: var(--gold);
-      letter-spacing: .5px;
+      color: var(--color-accent);
+      white-space: nowrap;
     }
+    nav .brand a { color: inherit; }
     nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
+      display: none;
+      position: absolute;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      background: var(--color-primary);
+      flex-direction: column;
+      padding: .5rem 1rem 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,.25);
     }
+    nav ul.open { display: flex; }
     nav ul li a {
-      color: var(--white);
-      font-size: .85rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: .5px;
+      display: block;
+      padding: .65rem 0;
+      color: rgba(255,255,255,.85);
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .3px;
       transition: color .2s;
     }
-    nav ul li a:hover { color: var(--gold); }
-    nav .menu-toggle {
-      display: none;
+    nav ul li a:hover,
+    nav ul li a:focus { color: var(--color-accent); }
+    nav ul li a.active { color: var(--color-accent); }
+    nav ul li a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 2px; }
+    .menu-toggle {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
       background: none;
       border: none;
       cursor: pointer;
-      flex-direction: column;
-      gap: 5px;
+      padding: 8px;
+      min-width: 44px;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
     }
-    nav .menu-toggle span {
+    .menu-toggle span {
       display: block;
-      width: 24px;
+      width: 22px;
       height: 2px;
-      background: var(--white);
-      transition: .3s;
+      background: #fff;
+      border-radius: 1px;
+      transition: transform .3s, opacity .3s;
     }
+    .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* ── Section Shared ───────────────────────────────── */
-    section { padding: 4rem 2rem; }
-    .container { max-width: 1000px; margin: 0 auto; }
-    .section-title {
-      font-family: 'Lora', serif;
-      font-size: 1.8rem;
-      color: var(--navy);
-      margin-bottom: 1.5rem;
-      position: relative;
-      display: inline-block;
-    }
-    .section-title::after {
-      content: '';
-      display: block;
-      width: 50px;
-      height: 3px;
-      background: var(--gold);
-      margin-top: .4rem;
-    }
-
-    /* ── Hero Section ─────────────────────────────────── */
+    /* ── Hero (placeholder structure) ──────────────────── */
     #hero {
       position: relative;
-      min-height: 520px;
+      min-height: 480px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: var(--white);
-      background: var(--navy) url('[hero-background-image.jpg]') center/cover no-repeat;
-      padding: 6rem 2rem;
-    }
-    #hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(11,29,58,.75);
-    }
-    #hero .hero-content { position: relative; z-index: 1; }
-    #hero h1 {
-      font-family: 'Lora', serif;
-      font-size: 3rem;
-      font-weight: 700;
-      margin-bottom: .3rem;
-    }
-    #hero .tagline {
-      font-size: 1.15rem;
-      color: var(--gold-light);
-      margin-bottom: 1.2rem;
-      font-weight: 600;
-    }
-    #hero .details {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: .6rem 1.5rem;
-      font-size: .95rem;
-      opacity: .9;
-    }
-    #hero .details span { white-space: nowrap; }
-
-    /* ── Quick Stats ──────────────────────────────────── */
-    #stats { background: var(--navy); color: var(--white); padding: 2.5rem 2rem; }
-    .stats-row {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 2rem;
-    }
-    .stat-card {
-      text-align: center;
-      min-width: 140px;
-    }
-    .stat-card .number {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--gold);
-      line-height: 1.2;
-    }
-    .stat-card .label {
-      font-size: .8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      opacity: .8;
-      margin-top: .2rem;
+      color: #fff;
+      background: var(--color-primary);
+      padding: 4rem 1rem 3rem;
     }
 
-    /* ── About ────────────────────────────────────────── */
-    #about { background: var(--off-white); }
-    .about-grid {
-      display: flex;
-      gap: 2.5rem;
-      align-items: flex-start;
-    }
-    .headshot-placeholder {
-      flex-shrink: 0;
-      width: 200px;
-      height: 250px;
-      background: var(--navy-light);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold);
-      font-size: .85rem;
-      font-weight: 600;
-      text-align: center;
-    }
-    .about-text p { margin-bottom: 1rem; color: var(--text-light); }
+    /* ── Alternating Section Backgrounds ───────────────── */
+    #about { background: var(--color-surface); }
+    #sailing-experience { background: var(--color-bg); }
+    #academics { background: var(--color-surface); }
+    #athletics-activities { background: var(--color-bg); }
+    #results { background: var(--color-surface); }
+    #video { background: var(--color-bg); }
+    #schedule { background: var(--color-surface); }
+    #contact { background: var(--color-primary); color: #fff; }
+    #contact .section-title { color: #fff; }
 
-    /* ── Academics ─────────────────────────────────────── */
-    #academics { background: var(--white); }
-    .academics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.2rem;
-    }
-    .acad-card {
-      background: var(--off-white);
-      border-left: 4px solid var(--gold);
-      padding: 1.2rem 1.4rem;
-      border-radius: 4px;
-    }
-    .acad-card .acad-label {
-      font-size: .75rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-light);
-      margin-bottom: .25rem;
-    }
-    .acad-card .acad-value {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--navy);
-    }
-
-    /* ── Tables (Results & Schedule) ──────────────────── */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    thead { background: var(--navy); color: var(--white); }
-    th, td {
-      padding: .75rem 1rem;
-      text-align: left;
-      font-size: .9rem;
-    }
-    th {
-      font-weight: 600;
-      font-size: .8rem;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-    }
-    tbody tr { border-bottom: 1px solid #e0e0e0; }
-    tbody tr:nth-child(even) { background: var(--off-white); }
-
-    /* ── Results ───────────────────────────────────────── */
-    #results { background: var(--off-white); }
-    .table-wrap { overflow-x: auto; }
-
-    /* ── Video ─────────────────────────────────────────── */
-    #video { background: var(--white); text-align: center; }
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      max-width: 720px;
-      margin: 1rem auto 0;
-      background: var(--navy-light);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: 0;
-    }
-
-    /* ── Schedule ──────────────────────────────────────── */
-    #schedule { background: var(--off-white); }
-
-    /* ── Contact ──────────────────────────────────────── */
-    #contact { background: var(--navy); color: var(--white); }
-    #contact .section-title { color: var(--white); }
-    #contact .section-title::after { background: var(--gold); }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-    .contact-card h3 {
-      color: var(--gold);
-      margin-bottom: .5rem;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-    }
-    .contact-card p {
-      margin-bottom: .3rem;
-      font-size: .95rem;
-      opacity: .9;
-    }
-    .contact-card a { color: var(--gold-light); text-decoration: underline; }
-    .contact-card a:hover { color: var(--white); }
-
-    /* ── Footer ───────────────────────────────────────── */
+    /* ── Footer ────────────────────────────────────────── */
     footer {
-      background: #071225;
+      background: #0f2440;
       color: rgba(255,255,255,.5);
       text-align: center;
-      padding: 1.5rem 2rem;
+      padding: 1.5rem 1rem;
       font-size: .8rem;
     }
-    footer strong { color: var(--gold); }
+    footer strong { color: var(--color-accent); }
 
-    /* ── Mobile Responsive ────────────────────────────── */
-    @media (max-width: 768px) {
+    /* ── Tablet (768px+) ───────────────────────────────── */
+    @media (min-width: 768px) {
+      section { padding: var(--section-pad-tablet); }
+      nav { padding: 0 2rem; }
       nav ul {
-        display: none;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        right: 0;
-        background: var(--navy);
-        flex-direction: column;
-        padding: 1rem 2rem;
-        gap: .8rem;
-        box-shadow: 0 4px 8px rgba(0,0,0,.3);
+        display: flex;
+        position: static;
+        flex-direction: row;
+        gap: 1.5rem;
+        padding: 0;
+        box-shadow: none;
+        background: transparent;
       }
-      nav ul.open { display: flex; }
-      nav .menu-toggle { display: flex; }
-      #hero h1 { font-size: 2rem; }
-      #hero .tagline { font-size: 1rem; }
-      .about-grid { flex-direction: column; align-items: center; text-align: center; }
-      .contact-grid { grid-template-columns: 1fr; }
-      .stat-card .number { font-size: 1.8rem; }
-      th, td { padding: .5rem .6rem; font-size: .8rem; }
+      nav ul li a { font-size: .8rem; text-transform: uppercase; letter-spacing: .5px; padding: 0; }
+      .menu-toggle { display: none; }
+      .section-title { font-size: 1.8rem; }
+    }
+
+    /* ── Desktop (1024px+) ─────────────────────────────── */
+    @media (min-width: 1024px) {
+      section { padding: var(--section-pad-desktop); }
+    }
+
+    /* ── Print Stylesheet ──────────────────────────────── */
+    @media print {
+      nav, #hero, #video, .reveal { display: none !important; }
+      body { font-size: 11pt; color: #000; background: #fff; }
+      section { padding: 12px 0 !important; page-break-inside: avoid; }
+      #contact { background: #fff !important; color: #000 !important; }
+      #contact .section-title { color: #000 !important; }
+      a { color: #000; text-decoration: none; }
+      a[href^="mailto"]::after,
+      a[href^="tel"]::after { content: " (" attr(href) ")"; font-size: 9pt; }
+      footer { background: #fff !important; color: #333 !important; }
     }
   </style>
 </head>
@@ -326,14 +245,14 @@
   <!-- ============================================================
        NAVIGATION
        ============================================================ -->
-  <nav>
-    <div class="brand">[Athlete Name]</div>
-    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('nav ul').classList.toggle('open')">
+  <nav aria-label="Main navigation">
+    <div class="brand"><a href="#hero" id="nav-brand"></a></div>
+    <button class="menu-toggle" aria-label="Toggle menu" id="menu-toggle">
       <span></span><span></span><span></span>
     </button>
-    <ul>
-      <li><a href="#hero">Home</a></li>
+    <ul id="nav-links">
       <li><a href="#about">About</a></li>
+      <li><a href="#sailing-experience">Experience</a></li>
       <li><a href="#academics">Academics</a></li>
       <li><a href="#results">Results</a></li>
       <li><a href="#video">Video</a></li>
@@ -342,288 +261,406 @@
     </ul>
   </nav>
 
-  <!-- ============================================================
-       HERO SECTION
-       ============================================================ -->
-  <section id="hero">
-    <div class="hero-content">
-      <h1>[Athlete Name]</h1>
-      <p class="tagline">Class of 2027 &middot; [Skipper / Crew]</p>
-      <div class="details">
-        <span>[School Name]</span>
-        <span>[City, State]</span>
-        <span>[Height] &middot; [Weight]</span>
+  <main>
+    <!-- ============================================================
+         HERO SECTION
+         ============================================================ -->
+    <section id="hero" aria-label="Athlete introduction">
+      <div class="hero-content container" id="hero-content">
+        <!-- Populated by JS -->
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============================================================
-       QUICK STATS
-       ============================================================ -->
-  <section id="stats">
-    <div class="container">
-      <div class="stats-row">
-        <div class="stat-card">
-          <div class="number">[X.XX]</div>
-          <div class="label">GPA</div>
-        </div>
-        <div class="stat-card">
-          <div class="number">[XXXX]</div>
-          <div class="label">SAT Score</div>
-        </div>
-        <div class="stat-card">
-          <div class="number">[X]</div>
-          <div class="label">Years Varsity</div>
-        </div>
-        <div class="stat-card">
-          <div class="number">[Yes/No]</div>
-          <div class="label">Team Captain</div>
-        </div>
+    <!-- ============================================================
+         ABOUT SECTION
+         ============================================================ -->
+    <section id="about" aria-label="About the athlete">
+      <div class="container reveal" id="about-content">
+        <!-- Populated by JS -->
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============================================================
-       ABOUT SECTION
-       ============================================================ -->
-  <section id="about">
-    <div class="container">
-      <h2 class="section-title">About Me</h2>
-      <div class="about-grid">
-        <div class="headshot-placeholder">[Headshot Image]</div>
-        <div class="about-text">
-          <p>
-            [I have been sailing competitively since age X and currently race with
-            the team at School Name. As a skipper/crew, I specialize in fleet
-            racing and team racing across FJ and CFJ classes. My goal is to
-            compete at the collegiate level while pursuing a degree in my
-            intended major.]
-          </p>
-          <p>
-            [Off the water, I am involved in activities/clubs/community service.
-            I bring leadership, dedication, and a strong work ethic both on and
-            off the racecourse.]
-          </p>
-        </div>
+    <!-- ============================================================
+         SAILING EXPERIENCE SECTION (NEW)
+         ============================================================ -->
+    <section id="sailing-experience" aria-label="Sailing experience">
+      <div class="container reveal" id="sailing-experience-content">
+        <!-- Populated by JS -->
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============================================================
-       ACADEMICS SECTION
-       ============================================================ -->
-  <section id="academics">
-    <div class="container">
-      <h2 class="section-title">Academics</h2>
-      <div class="academics-grid">
-        <div class="acad-card">
-          <div class="acad-label">Unweighted GPA</div>
-          <div class="acad-value">[X.XX]</div>
-        </div>
-        <div class="acad-card">
-          <div class="acad-label">Weighted GPA</div>
-          <div class="acad-value">[X.XX]</div>
-        </div>
-        <div class="acad-card">
-          <div class="acad-label">SAT Score</div>
-          <div class="acad-value">[XXXX]</div>
-        </div>
-        <div class="acad-card">
-          <div class="acad-label">ACT Score</div>
-          <div class="acad-value">[XX]</div>
-        </div>
-        <div class="acad-card">
-          <div class="acad-label">Intended Major</div>
-          <div class="acad-value">[Major]</div>
-        </div>
-        <div class="acad-card">
-          <div class="acad-label">Class Rank</div>
-          <div class="acad-value">[X of XXX]</div>
-        </div>
+    <!-- ============================================================
+         ACADEMICS SECTION
+         ============================================================ -->
+    <section id="academics" aria-label="Academic information">
+      <div class="container reveal" id="academics-content">
+        <!-- Populated by JS -->
       </div>
-      <div style="margin-top:1.5rem;">
-        <h3 style="font-size:1rem;color:var(--navy);margin-bottom:.5rem;">AP &amp; Honors Courses</h3>
-        <p style="color:var(--text-light);font-size:.95rem;">
-          [AP Course 1], [AP Course 2], [AP Course 3], [Honors Course 1],
-          [Honors Course 2], [Honors Course 3]
-        </p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============================================================
-       SAILING RESULTS SECTION
-       ============================================================ -->
-  <section id="results">
-    <div class="container">
-      <h2 class="section-title">Sailing Results</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Regatta</th>
-              <th>Division</th>
-              <th>Finish</th>
-              <th>Fleet Size</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>[Mar 2026]</td>
-              <td>[PCISA Golden Bear Regatta]</td>
-              <td>[A Division]</td>
-              <td>[3rd]</td>
-              <td>[24 boats]</td>
-            </tr>
-            <tr>
-              <td>[Feb 2026]</td>
-              <td>[PCISA South #4]</td>
-              <td>[A Division]</td>
-              <td>[5th]</td>
-              <td>[18 boats]</td>
-            </tr>
-            <tr>
-              <td>[Jan 2026]</td>
-              <td>[ISSA Baker Team Race Qualifier]</td>
-              <td>[Team Race]</td>
-              <td>[2nd]</td>
-              <td>[12 teams]</td>
-            </tr>
-            <tr>
-              <td>[Nov 2025]</td>
-              <td>[PCISA North-South Intersectional]</td>
-              <td>[B Division]</td>
-              <td>[1st]</td>
-              <td>[20 boats]</td>
-            </tr>
-            <tr>
-              <td>[Oct 2025]</td>
-              <td>[ISSA Mallory Qualifier — District 8]</td>
-              <td>[A Division]</td>
-              <td>[4th]</td>
-              <td>[16 boats]</td>
-            </tr>
-            <tr>
-              <td>[Sep 2025]</td>
-              <td>[PCISA Season Opener]</td>
-              <td>[A Division]</td>
-              <td>[2nd]</td>
-              <td>[22 boats]</td>
-            </tr>
-          </tbody>
-        </table>
+    <!-- ============================================================
+         ATHLETICS & ACTIVITIES SECTION (NEW)
+         ============================================================ -->
+    <section id="athletics-activities" aria-label="Athletics and activities">
+      <div class="container reveal" id="athletics-content">
+        <!-- Populated by JS -->
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============================================================
-       VIDEO SECTION
-       ============================================================ -->
-  <section id="video">
-    <div class="container">
-      <h2 class="section-title">Sailing Highlight Video</h2>
-      <div class="video-wrapper">
-        <!-- Replace the src below with your YouTube embed URL -->
-        <iframe
-          src="[https://www.youtube.com/embed/VIDEO_ID]"
-          title="Sailing Highlight Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-        </iframe>
+    <!-- ============================================================
+         SAILING RESULTS SECTION
+         ============================================================ -->
+    <section id="results" aria-label="Sailing results">
+      <div class="container reveal" id="results-content">
+        <!-- Populated by JS -->
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============================================================
-       SCHEDULE SECTION
-       ============================================================ -->
-  <section id="schedule">
-    <div class="container">
-      <h2 class="section-title">Upcoming Schedule</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Event</th>
-              <th>Location</th>
-              <th>Role</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>[Apr 5–6, 2026]</td>
-              <td>[PCISA South #6]</td>
-              <td>[Long Beach, CA]</td>
-              <td>[Skipper — A Division]</td>
-            </tr>
-            <tr>
-              <td>[Apr 18–19, 2026]</td>
-              <td>[PCISA Silver PCCs]</td>
-              <td>[San Francisco, CA]</td>
-              <td>[Skipper — A Division]</td>
-            </tr>
-            <tr>
-              <td>[May 2–3, 2026]</td>
-              <td>[PCISA Gold PCCs]</td>
-              <td>[Long Beach, CA]</td>
-              <td>[Skipper — A Division]</td>
-            </tr>
-            <tr>
-              <td>[May 16–17, 2026]</td>
-              <td>[ISSA Mallory National Championship]</td>
-              <td>[Annapolis, MD]</td>
-              <td>[Skipper — A Division]</td>
-            </tr>
-          </tbody>
-        </table>
+    <!-- ============================================================
+         VIDEO SECTION
+         ============================================================ -->
+    <section id="video" aria-label="Highlight video">
+      <div class="container reveal" id="video-content">
+        <!-- Populated by JS -->
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============================================================
-       CONTACT SECTION
-       ============================================================ -->
-  <section id="contact">
-    <div class="container">
-      <h2 class="section-title">Contact</h2>
-      <div class="contact-grid">
-        <div class="contact-card">
-          <h3>Athlete</h3>
-          <p><strong>[Athlete Name]</strong></p>
-          <p>[Phone Number]</p>
-          <p><a href="mailto:[athlete@email.com]">[athlete@email.com]</a></p>
-        </div>
-        <div class="contact-card">
-          <h3>Coach</h3>
-          <p><strong>[Coach Name]</strong></p>
-          <p>[School Name] Sailing Team</p>
-          <p>[Phone Number]</p>
-          <p><a href="mailto:[coach@email.com]">[coach@email.com]</a></p>
-        </div>
+    <!-- ============================================================
+         SCHEDULE SECTION
+         ============================================================ -->
+    <section id="schedule" aria-label="Upcoming schedule">
+      <div class="container reveal" id="schedule-content">
+        <!-- Populated by JS -->
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- ============================================================
+         CONTACT SECTION
+         ============================================================ -->
+    <section id="contact" aria-label="Contact information">
+      <div class="container reveal" id="contact-content">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+  </main>
 
   <!-- ============================================================
        FOOTER
        ============================================================ -->
-  <footer>
-    <p><strong>[Athlete Name]</strong> &middot; Class of 2027</p>
-    <p>Last updated [Month Year]</p>
+  <footer id="footer">
+    <!-- Populated by JS -->
   </footer>
 
   <!-- ============================================================
-       JAVASCRIPT — Mobile Menu & Smooth Scroll Close
+       JAVASCRIPT — Config, Rendering, Interactions
        ============================================================ -->
   <script>
-    // Close mobile menu when a nav link is clicked
-    document.querySelectorAll('nav ul li a').forEach(function(link) {
+    // ╔════════════════════════════════════════════════════════════╗
+    // ║  ATHLETE PROFILE — EDIT YOUR INFO BELOW                   ║
+    // ║  All placeholder values are marked with [brackets].       ║
+    // ║  Replace them with your real information.                 ║
+    // ╠════════════════════════════════════════════════════════════╣
+
+    const ATHLETE = {
+      // ── Identity ───────────────────────────────────────────
+      name: "[Athlete Name]",
+      classYear: 2027,
+      position: "[Skipper / Crew]",
+      school: "[School Name]",
+      city: "[City]",
+      state: "[State]",
+      height: "[Height]",
+      weight: "[Weight]",
+
+      // ── Academics ──────────────────────────────────────────
+      gpaUnweighted: "[X.XX]",
+      gpaWeighted: "[X.XX]",
+      sat: "[XXXX]",
+      act: "[XX]",
+      intendedMajor: "[Major]",
+      classRank: "[X of XXX]",
+      apCourses: ["[AP Course 1]", "[AP Course 2]", "[AP Course 3]"],
+      honorsCourses: ["[Honors Course 1]", "[Honors Course 2]"],
+
+      // ── Sailing ────────────────────────────────────────────
+      yearsRacing: "[X]",
+      yearsVarsity: "[X]",
+      teamCaptain: "[Yes/No]",
+      boatClasses: ["FJ", "CFJ", "C420", "Laser/ILCA"],
+      disciplines: ["Fleet Racing", "Team Racing"],
+      trainingAndCoaching: [
+        "[Current HS team + coach name]",
+        "[Club/travel team if applicable]",
+        "[Clinics or camps attended]"
+      ],
+      awards: [
+        "[Sailor of the Year or similar]",
+        "[Sportsmanship or leadership award]"
+      ],
+
+      // ── Athletics & Activities ─────────────────────────────
+      otherSports: ["[Sport 1 — X years]", "[Sport 2 — X years]"],
+      leadershipRoles: ["[Team captain]", "[Club president]"],
+      communityService: "[Organization, hours/commitment]",
+
+      // ── About (bio paragraphs) ─────────────────────────────
+      aboutText: "[I have been sailing competitively since age X and currently race with the team at School Name. As a skipper/crew, I specialize in fleet racing and team racing across FJ and CFJ classes. My goal is to compete at the collegiate level while pursuing a degree in my intended major.]",
+      aboutText2: "[Off the water, I am involved in activities/clubs/community service. I bring leadership, dedication, and a strong work ethic both on and off the racecourse.]",
+
+      // ── Contact ────────────────────────────────────────────
+      email: "[athlete@email.com]",
+      phone: "[Phone Number]",
+      coachName: "[Coach Name]",
+      coachTeam: "[School Name] Sailing Team",
+      coachEmail: "[coach@email.com]",
+      coachPhone: "[Phone Number]",
+      parentName: "[Parent/Guardian Name]",
+      parentEmail: "[parent@email.com]",
+      parentPhone: "[Phone Number]",
+
+      // ── Links & Media ─────────────────────────────────────
+      resumePDF: "#",              // URL to downloadable PDF resume
+      videoURL: "",                // YouTube embed URL (leave empty for placeholder)
+      videoCaption: "[Race footage from Event Name, Date. Watch for tactical positioning at the start and mark roundings.]",
+      heroImage: "",               // Hero background image path (leave empty for solid color)
+      headshotImage: "",           // Headshot image path (leave empty for placeholder)
+      sailRecruitURL: "",          // SailRecruit profile URL (optional)
+      techscoreURL: "",            // Techscore profile URL (optional)
+
+      // ── Meta ───────────────────────────────────────────────
+      lastUpdated: "[Month Year]"
+    };
+
+    // ── Regatta Results (reverse-chronological, most significant only) ──
+    const RESULTS = [
+      { date: "Mar 2026", regatta: "PCISA Golden Bear Regatta", division: "A Division", finish: 3, fleetSize: 24, role: "Skipper" },
+      { date: "Feb 2026", regatta: "PCISA South #4", division: "A Division", finish: 5, fleetSize: 18, role: "Skipper" },
+      { date: "Jan 2026", regatta: "ISSA Baker Team Race Qualifier", division: "Team Race", finish: 2, fleetSize: 12, role: "Skipper" },
+      { date: "Nov 2025", regatta: "PCISA North-South Intersectional", division: "B Division", finish: 1, fleetSize: 20, role: "Skipper" },
+      { date: "Oct 2025", regatta: "ISSA Mallory Qualifier — District 8", division: "A Division", finish: 4, fleetSize: 16, role: "Skipper" },
+      { date: "Sep 2025", regatta: "PCISA Season Opener", division: "A Division", finish: 2, fleetSize: 22, role: "Skipper" },
+    ];
+
+    // ── Upcoming Schedule ────────────────────────────────────────────────
+    const SCHEDULE = [
+      { date: "Apr 5–6, 2026", event: "PCISA South #6", location: "Long Beach, CA", role: "Skipper — A Division" },
+      { date: "Apr 18–19, 2026", event: "PCISA Silver PCCs", location: "San Francisco, CA", role: "Skipper — A Division" },
+      { date: "May 2–3, 2026", event: "PCISA Gold PCCs", location: "Long Beach, CA", role: "Skipper — A Division" },
+      { date: "May 16–17, 2026", event: "ISSA Mallory National Championship", location: "Annapolis, MD", role: "Skipper — A Division" },
+    ];
+
+
+    // ╔════════════════════════════════════════════════════════════╗
+    // ║  RENDERING — Builds all HTML from the config above        ║
+    // ╚════════════════════════════════════════════════════════════╝
+
+    function renderPage() {
+      // ── Update document title & OG tags ──
+      document.title = `${ATHLETE.name} — Sailing Recruit, Class of ${ATHLETE.classYear}`;
+      setMeta('description', `Recruiting profile for ${ATHLETE.name}, Class of ${ATHLETE.classYear} sailing recruit from ${ATHLETE.school}. ${ATHLETE.position} competing in PCISA and ISSA events.`);
+      setOG('og:title', `${ATHLETE.name} — Sailing Recruit, Class of ${ATHLETE.classYear}`);
+      setOG('og:description', `${ATHLETE.position} · ${ATHLETE.school} · GPA: ${ATHLETE.gpaUnweighted} · SAT: ${ATHLETE.sat}`);
+      if (ATHLETE.heroImage) setOG('og:image', ATHLETE.heroImage);
+
+      // ── Nav brand ──
+      document.getElementById('nav-brand').textContent = ATHLETE.name;
+
+      // ── Hero ──
+      renderHero();
+
+      // ── About ──
+      renderAbout();
+
+      // ── Sailing Experience ──
+      renderSailingExperience();
+
+      // ── Academics ──
+      renderAcademics();
+
+      // ── Athletics & Activities ──
+      renderAthletics();
+
+      // ── Results ──
+      renderResults();
+
+      // ── Video ──
+      renderVideo();
+
+      // ── Schedule ──
+      renderSchedule();
+
+      // ── Contact ──
+      renderContact();
+
+      // ── Footer ──
+      renderFooter();
+    }
+
+    // ── Helper: set meta tags ──
+    function setMeta(name, content) {
+      const el = document.querySelector(`meta[name="${name}"]`);
+      if (el) el.setAttribute('content', content);
+    }
+    function setOG(property, content) {
+      const el = document.querySelector(`meta[property="${property}"]`);
+      if (el) el.setAttribute('content', content);
+    }
+
+    // ── Ordinal suffix (1st, 2nd, 3rd, etc.) ──
+    function ordinal(n) {
+      const s = ['th','st','nd','rd'];
+      const v = n % 100;
+      return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    }
+
+    // ── Podium class ──
+    function podiumClass(finish) {
+      if (finish === 1) return 'podium-gold';
+      if (finish === 2) return 'podium-silver';
+      if (finish === 3) return 'podium-bronze';
+      return '';
+    }
+
+    // ── Section Renderers (placeholders — will be built out in subsequent phases) ──
+
+    function renderHero() {
+      const el = document.getElementById('hero-content');
+      el.innerHTML = `
+        <h1>${ATHLETE.name}</h1>
+        <p>Class of ${ATHLETE.classYear} · ${ATHLETE.position}</p>
+        <p>${ATHLETE.school} · ${ATHLETE.city}, ${ATHLETE.state}</p>
+        <p>${ATHLETE.height} · ${ATHLETE.weight}</p>
+      `;
+    }
+
+    function renderAbout() {
+      const el = document.getElementById('about-content');
+      el.innerHTML = `
+        <h2 class="section-title">About Me</h2>
+        <p>${ATHLETE.aboutText}</p>
+        <p>${ATHLETE.aboutText2}</p>
+      `;
+    }
+
+    function renderSailingExperience() {
+      const el = document.getElementById('sailing-experience-content');
+      el.innerHTML = `
+        <h2 class="section-title">Sailing Experience</h2>
+        <p>Primary Position: ${ATHLETE.position} · Years Racing: ${ATHLETE.yearsRacing}</p>
+      `;
+    }
+
+    function renderAcademics() {
+      const el = document.getElementById('academics-content');
+      el.innerHTML = `
+        <h2 class="section-title">Academics</h2>
+        <p>GPA: ${ATHLETE.gpaUnweighted} · SAT: ${ATHLETE.sat} · Major: ${ATHLETE.intendedMajor}</p>
+      `;
+    }
+
+    function renderAthletics() {
+      const el = document.getElementById('athletics-content');
+      el.innerHTML = `
+        <h2 class="section-title">Athletics &amp; Activities</h2>
+        <p>${ATHLETE.otherSports.join(', ')}</p>
+      `;
+    }
+
+    function renderResults() {
+      const el = document.getElementById('results-content');
+      el.innerHTML = `
+        <h2 class="section-title">Sailing Results</h2>
+        <p>${RESULTS.length} results loaded</p>
+      `;
+    }
+
+    function renderVideo() {
+      const el = document.getElementById('video-content');
+      el.innerHTML = `
+        <h2 class="section-title">Sailing Highlight Video</h2>
+        <p>Video section placeholder</p>
+      `;
+    }
+
+    function renderSchedule() {
+      const el = document.getElementById('schedule-content');
+      el.innerHTML = `
+        <h2 class="section-title">Upcoming Schedule</h2>
+        <p>${SCHEDULE.length} events loaded</p>
+      `;
+    }
+
+    function renderContact() {
+      const el = document.getElementById('contact-content');
+      el.innerHTML = `
+        <h2 class="section-title">Contact</h2>
+        <p>Contact section placeholder</p>
+      `;
+    }
+
+    function renderFooter() {
+      const el = document.getElementById('footer');
+      el.innerHTML = `
+        <p><strong>${ATHLETE.name}</strong> · Class of ${ATHLETE.classYear}</p>
+        <p>Last updated ${ATHLETE.lastUpdated}</p>
+      `;
+    }
+
+
+    // ╔════════════════════════════════════════════════════════════╗
+    // ║  INTERACTIONS — Nav, scroll reveal, active section        ║
+    // ╚════════════════════════════════════════════════════════════╝
+
+    // ── Mobile hamburger menu ──
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+    menuToggle.addEventListener('click', function() {
+      menuToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    // Close menu on link click
+    navLinks.querySelectorAll('a').forEach(function(link) {
       link.addEventListener('click', function() {
-        document.querySelector('nav ul').classList.remove('open');
+        menuToggle.classList.remove('open');
+        navLinks.classList.remove('open');
       });
     });
+
+    // ── Scroll reveal (Intersection Observer) ──
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      revealObserver.observe(el);
+    });
+
+    // ── Active nav link highlight (Intersection Observer) ──
+    const sections = document.querySelectorAll('main section[id]');
+    const navItems = document.querySelectorAll('#nav-links a');
+
+    const sectionObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navItems.forEach(function(a) {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-30% 0px -70% 0px' });
+
+    sections.forEach(function(section) {
+      sectionObserver.observe(section);
+    });
+
+
+    // ── Initialize ──
+    renderPage();
   </script>
 
 </body>
