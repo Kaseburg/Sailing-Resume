@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[Athlete Name] — Sailing Recruit, Class of 2027</title>
+  <title>[Athlete Name] — Recruit, Class of 2027</title>
   <meta name="description" content="Recruiting profile for [Athlete Name], Class of 2027 sailing recruit from [School Name]. Skipper/Crew competing in PCISA and ISSA events.">
 
   <!-- Open Graph tags for link previews when coaches share the URL -->
-  <meta property="og:title" content="[Athlete Name] — Sailing Recruit, Class of 2027">
+  <meta property="og:title" content="[Athlete Name] — Recruit, Class of 2027">
   <meta property="og:description" content="[Position] · [School Name] · GPA: [X.XX] · SAT: [XXXX]">
   <meta property="og:image" content="[URL to action photo]">
   <meta property="og:url" content="https://kaseburg.github.io/Sailing-Resume">
@@ -1369,7 +1369,7 @@
     const ATHLETE = {
       // ── Identity ───────────────────────────────────────────
       name: "Sean Kaseburg",
-      classYear: 2008,
+      classYear: 2028,
       position: "Skipper",
       school: "Cathedral Catholic",
       city: "San Diego",
@@ -1461,9 +1461,9 @@
 
     function renderPage() {
       // ── Update document title & OG tags ──
-      document.title = `${ATHLETE.name} — Sailing Recruit, Class of ${ATHLETE.classYear}`;
+      document.title = `${ATHLETE.name} — Recruit, Class of ${ATHLETE.classYear}`;
       setMeta('description', `Recruiting profile for ${ATHLETE.name}, Class of ${ATHLETE.classYear} sailing recruit from ${ATHLETE.school}. ${ATHLETE.position} competing in PCISA and ISSA events.`);
-      setOG('og:title', `${ATHLETE.name} — Sailing Recruit, Class of ${ATHLETE.classYear}`);
+      setOG('og:title', `${ATHLETE.name} — Recruit, Class of ${ATHLETE.classYear}`);
       setOG('og:description', `${ATHLETE.position} · ${ATHLETE.school} · GPA: ${ATHLETE.gpaUnweighted} · SAT: ${ATHLETE.sat}`);
       if (ATHLETE.heroImage) setOG('og:image', ATHLETE.heroImage);
 
