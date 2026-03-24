@@ -306,6 +306,164 @@
       margin-bottom: 0;
     }
 
+    /* ================================================================
+       SAILING EXPERIENCE SECTION
+       ================================================================ */
+    .sailing-info-card {
+      background: var(--color-surface);
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      padding: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+    .sailing-info-top {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .sailing-info-item-label {
+      font-size: .7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--color-text-muted);
+      margin-bottom: .15rem;
+    }
+    .sailing-info-item-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    .sailing-info-row {
+      padding: .75rem 0;
+    }
+    .sailing-info-row + .sailing-info-row {
+      border-top: 1px solid var(--color-border);
+    }
+    .sailing-info-row-label {
+      font-size: .7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--color-text-muted);
+      margin-bottom: .25rem;
+    }
+    .sailing-info-row-value {
+      font-size: .95rem;
+      color: var(--color-text);
+    }
+
+    .sailing-sub-heading {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: .5rem;
+    }
+    .sailing-list {
+      margin-bottom: 1.5rem;
+    }
+    .sailing-list li {
+      position: relative;
+      padding-left: 1.1rem;
+      margin-bottom: .35rem;
+      font-size: .95rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+    .sailing-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .55em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
+
+    /* ================================================================
+       ACADEMICS SECTION
+       ================================================================ */
+    .academics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+    }
+    .acad-card {
+      background: var(--color-surface);
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .acad-card-value {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1.2;
+      margin-bottom: .2rem;
+    }
+    .acad-card-label {
+      font-size: .7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--color-text-muted);
+    }
+
+    .courses-heading {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin: 1.75rem 0 .75rem;
+    }
+    .course-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+    .course-pill {
+      background: rgba(27, 58, 92, .1);
+      color: var(--color-primary);
+      border-radius: 20px;
+      padding: .25rem .875rem;
+      font-size: .85rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    /* ================================================================
+       ATHLETICS & ACTIVITIES SECTION
+       ================================================================ */
+    .athletics-card {
+      background: var(--color-surface);
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      padding: 1.5rem;
+    }
+    .athletics-row {
+      margin-bottom: 1rem;
+    }
+    .athletics-row:last-child {
+      margin-bottom: 0;
+    }
+    .athletics-label {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: .15rem;
+    }
+    .athletics-value {
+      font-size: .95rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
     /* ── Footer ────────────────────────────────────────── */
     footer {
       background: #0f2440;
@@ -472,6 +630,31 @@
       .about-headshot {
         width: 240px;
         height: 280px;
+      }
+
+      /* ── Sailing Experience — tablet ── */
+      .sailing-info-top {
+        grid-template-columns: 1fr 1fr;
+      }
+      .sailing-info-card {
+        padding: 1.75rem;
+      }
+
+      /* ── Academics — tablet: 3 columns ── */
+      .academics-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .acad-card {
+        padding: 1.5rem;
+      }
+      .acad-card-value {
+        font-size: 1.5rem;
+      }
+
+      /* ── Athletics — tablet ── */
+      .athletics-card {
+        padding: 2rem;
       }
     }
 
@@ -944,25 +1127,111 @@
 
     function renderSailingExperience() {
       const el = document.getElementById('sailing-experience-content');
+
+      const trainingItems = ATHLETE.trainingAndCoaching
+        .map(function(item) { return '<li>' + item + '</li>'; }).join('');
+      const awardItems = ATHLETE.awards
+        .map(function(item) { return '<li>' + item + '</li>'; }).join('');
+
       el.innerHTML = `
         <h2 class="section-title">Sailing Experience</h2>
-        <p>Primary Position: ${ATHLETE.position} · Years Racing: ${ATHLETE.yearsRacing}</p>
+        <div class="sailing-info-card">
+          <div class="sailing-info-top">
+            <div>
+              <div class="sailing-info-item-label">Primary Position</div>
+              <div class="sailing-info-item-value">${ATHLETE.position}</div>
+            </div>
+            <div>
+              <div class="sailing-info-item-label">Years Racing</div>
+              <div class="sailing-info-item-value">${ATHLETE.yearsRacing}</div>
+            </div>
+          </div>
+          <div class="sailing-info-row">
+            <div class="sailing-info-row-label">Boat Classes</div>
+            <div class="sailing-info-row-value">${ATHLETE.boatClasses.join(', ')}</div>
+          </div>
+          <div class="sailing-info-row">
+            <div class="sailing-info-row-label">Disciplines</div>
+            <div class="sailing-info-row-value">${ATHLETE.disciplines.join(', ')}</div>
+          </div>
+        </div>
+
+        <h3 class="sailing-sub-heading">Training &amp; Coaching</h3>
+        <ul class="sailing-list">${trainingItems}</ul>
+
+        <h3 class="sailing-sub-heading">Awards &amp; Recognition</h3>
+        <ul class="sailing-list">${awardItems}</ul>
       `;
     }
 
     function renderAcademics() {
       const el = document.getElementById('academics-content');
+
+      const allCourses = ATHLETE.apCourses.concat(ATHLETE.honorsCourses);
+      const pills = allCourses
+        .map(function(c) { return '<span class="course-pill">' + c + '</span>'; }).join('');
+
       el.innerHTML = `
         <h2 class="section-title">Academics</h2>
-        <p>GPA: ${ATHLETE.gpaUnweighted} · SAT: ${ATHLETE.sat} · Major: ${ATHLETE.intendedMajor}</p>
+        <div class="academics-grid">
+          <div class="acad-card">
+            <div class="acad-card-value">${ATHLETE.gpaUnweighted}</div>
+            <div class="acad-card-label">Unweighted GPA</div>
+          </div>
+          <div class="acad-card">
+            <div class="acad-card-value">${ATHLETE.gpaWeighted}</div>
+            <div class="acad-card-label">Weighted GPA</div>
+          </div>
+          <div class="acad-card">
+            <div class="acad-card-value">${ATHLETE.sat}</div>
+            <div class="acad-card-label">SAT Score</div>
+          </div>
+          <div class="acad-card">
+            <div class="acad-card-value">${ATHLETE.act}</div>
+            <div class="acad-card-label">ACT Score</div>
+          </div>
+          <div class="acad-card">
+            <div class="acad-card-value">${ATHLETE.intendedMajor}</div>
+            <div class="acad-card-label">Intended Major</div>
+          </div>
+          <div class="acad-card">
+            <div class="acad-card-value">${ATHLETE.classRank}</div>
+            <div class="acad-card-label">Class Rank</div>
+          </div>
+        </div>
+        <h3 class="courses-heading">AP &amp; Honors Courses</h3>
+        <div class="course-pills">${pills}</div>
       `;
     }
 
     function renderAthletics() {
       const el = document.getElementById('athletics-content');
+
+      // Build rows, skipping empty/placeholder-only arrays
+      let rows = '';
+
+      if (ATHLETE.otherSports.length > 0) {
+        rows += '<div class="athletics-row">'
+          + '<div class="athletics-label">Other Varsity Sports</div>'
+          + '<div class="athletics-value">' + ATHLETE.otherSports.join(', ') + '</div>'
+          + '</div>';
+      }
+      if (ATHLETE.leadershipRoles.length > 0) {
+        rows += '<div class="athletics-row">'
+          + '<div class="athletics-label">Leadership Roles</div>'
+          + '<div class="athletics-value">' + ATHLETE.leadershipRoles.join(', ') + '</div>'
+          + '</div>';
+      }
+      if (ATHLETE.communityService) {
+        rows += '<div class="athletics-row">'
+          + '<div class="athletics-label">Community Service</div>'
+          + '<div class="athletics-value">' + ATHLETE.communityService + '</div>'
+          + '</div>';
+      }
+
       el.innerHTML = `
         <h2 class="section-title">Athletics &amp; Activities</h2>
-        <p>${ATHLETE.otherSports.join(', ')}</p>
+        <div class="athletics-card">${rows}</div>
       `;
     }
 
