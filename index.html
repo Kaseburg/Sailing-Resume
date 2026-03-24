@@ -1327,8 +1327,8 @@
       weight: "[Weight]",
 
       // ── Academics ──────────────────────────────────────────
-      gpaUnweighted: "[X.XX]",
-      gpaWeighted: "[X.XX]",
+      gpaUnweighted: "4.0",
+      gpaWeighted: "4.7",
       sat: "[XXXX]",
       act: "[XX]",
       intendedMajor: "[Major]",
@@ -1474,20 +1474,20 @@
 
         <div class="hero-stats">
           <div class="hero-stat">
-            <div class="hero-stat-value">${ATHLETE.gpaUnweighted}</div>
-            <div class="hero-stat-label">GPA (unwgtd)</div>
+            <div class="hero-stat-value">${ATHLETE.gpaWeighted}</div>
+            <div class="hero-stat-label">Weighted GPA</div>
           </div>
           <div class="hero-stat">
-            <div class="hero-stat-value">${ATHLETE.sat}</div>
-            <div class="hero-stat-label">SAT Score</div>
+            <div class="hero-stat-value">${ATHLETE.gpaUnweighted}</div>
+            <div class="hero-stat-label">Unweighted GPA</div>
           </div>
           <div class="hero-stat">
             <div class="hero-stat-value">${ATHLETE.yearsVarsity}</div>
-            <div class="hero-stat-label">Yrs Varsity</div>
+            <div class="hero-stat-label">Varsity Skipper</div>
           </div>
           <div class="hero-stat">
             <div class="hero-stat-value">${ATHLETE.teamCaptain}</div>
-            <div class="hero-stat-label">Captain</div>
+            <div class="hero-stat-label">Team Captain</div>
           </div>
         </div>
 
