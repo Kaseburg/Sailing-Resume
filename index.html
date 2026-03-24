@@ -624,12 +624,173 @@
       color: #fff;
     }
 
+    /* ================================================================
+       SCHEDULE SECTION
+       ================================================================ */
+    .schedule-intro {
+      font-size: .95rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Desktop Table (hidden on mobile) ── */
+    .schedule-table-wrap {
+      display: none;
+    }
+    .schedule-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+    .schedule-table thead th {
+      background: var(--color-primary);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: .75rem 1rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .schedule-table tbody tr {
+      transition: background .15s ease;
+    }
+    .schedule-table tbody tr:nth-child(odd) { background: var(--color-surface); }
+    .schedule-table tbody tr:nth-child(even) { background: #F9FAFB; }
+    .schedule-table tbody tr:hover { background: #EEF2F7; }
+    .schedule-table tbody td {
+      padding: .75rem 1rem;
+      font-size: .9rem;
+      color: var(--color-text);
+    }
+
+    /* ── Mobile Cards (shown on mobile, hidden on tablet+) ── */
+    .schedule-cards {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+    .schedule-card {
+      background: var(--color-surface);
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      padding: 1rem;
+    }
+    .schedule-card-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: .2rem;
+    }
+    .schedule-card-date {
+      font-size: .9rem;
+      color: var(--color-text);
+      margin-bottom: .15rem;
+    }
+    .schedule-card-location {
+      font-size: .85rem;
+      color: var(--color-text-muted);
+      margin-bottom: .15rem;
+    }
+    .schedule-card-role {
+      font-size: .85rem;
+      color: var(--color-text-muted);
+    }
+
+    /* ================================================================
+       CONTACT SECTION
+       ================================================================ */
+    .contact-intro {
+      font-size: .95rem;
+      font-style: italic;
+      color: rgba(255,255,255,.65);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .75rem;
+    }
+    .contact-card {
+      background: rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .contact-card-heading {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--color-accent);
+      margin-bottom: 1rem;
+    }
+    .contact-card-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: .5rem;
+    }
+    .contact-card-team {
+      font-size: .9rem;
+      color: rgba(255,255,255,.6);
+      margin-bottom: .5rem;
+    }
+    .contact-card-line {
+      font-size: .9rem;
+      color: rgba(255,255,255,.7);
+      margin-bottom: .35rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .contact-card-line:last-child {
+      margin-bottom: 0;
+    }
+    .contact-card-line-label {
+      font-size: .7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: rgba(255,255,255,.4);
+      min-width: 2.5rem;
+    }
+    .contact-card a {
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    .contact-card a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    .contact-profiles {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: .85rem;
+      color: rgba(255,255,255,.5);
+    }
+    .contact-profiles a {
+      color: var(--color-accent);
+      text-decoration: underline;
+      margin: 0 .5rem;
+    }
+    .contact-profiles a:hover {
+      color: #fff;
+    }
+
     /* ── Footer ────────────────────────────────────────── */
     footer {
-      background: #0f2440;
+      background: var(--color-primary);
       color: rgba(255,255,255,.5);
       text-align: center;
-      padding: 1.5rem 1rem;
+      padding: 2rem 1rem;
       font-size: .85rem;
     }
     footer strong { color: var(--color-accent); }
@@ -823,6 +984,23 @@
       }
       .results-cards {
         display: none;
+      }
+
+      /* ── Schedule — tablet: show table, hide cards ── */
+      .schedule-table-wrap {
+        display: block;
+      }
+      .schedule-cards {
+        display: none;
+      }
+
+      /* ── Contact — tablet: 3 columns ── */
+      .contact-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+      .contact-card {
+        padding: 1.75rem;
       }
     }
 
@@ -1503,24 +1681,128 @@
 
     function renderSchedule() {
       const el = document.getElementById('schedule-content');
+
+      // Table rows
+      const tableRows = SCHEDULE.map(function(s) {
+        return '<tr>'
+          + '<td>' + s.date + '</td>'
+          + '<td>' + s.event + '</td>'
+          + '<td>' + s.location + '</td>'
+          + '<td>' + s.role + '</td>'
+          + '</tr>';
+      }).join('');
+
+      // Mobile cards
+      const cards = SCHEDULE.map(function(s) {
+        return '<div class="schedule-card">'
+          + '<div class="schedule-card-name">' + s.event + '</div>'
+          + '<div class="schedule-card-date">' + s.date + '</div>'
+          + '<div class="schedule-card-location">' + s.location + '</div>'
+          + '<div class="schedule-card-role">' + s.role + '</div>'
+          + '</div>';
+      }).join('');
+
       el.innerHTML = `
         <h2 class="section-title">Upcoming Schedule</h2>
-        <p>${SCHEDULE.length} events loaded</p>
+        <p class="schedule-intro">Upcoming regattas where you can see me sail</p>
+        <div class="schedule-table-wrap">
+          <table class="schedule-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Location</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>${tableRows}</tbody>
+          </table>
+        </div>
+        <div class="schedule-cards">${cards}</div>
       `;
     }
 
     function renderContact() {
       const el = document.getElementById('contact-content');
+      const isPlaceholder = function(val) { return !val || val.charAt(0) === '['; };
+      const showParent = !isPlaceholder(ATHLETE.parentName);
+
+      // Build contact cards
+      let athleteCard = `
+        <div class="contact-card">
+          <div class="contact-card-heading">Athlete</div>
+          <div class="contact-card-name">${ATHLETE.name}</div>
+          <div class="contact-card-line">
+            <span class="contact-card-line-label">Phone</span>
+            <a href="tel:${ATHLETE.phone}">${ATHLETE.phone}</a>
+          </div>
+          <div class="contact-card-line">
+            <span class="contact-card-line-label">Email</span>
+            <a href="mailto:${ATHLETE.email}">${ATHLETE.email}</a>
+          </div>
+        </div>`;
+
+      let coachCard = `
+        <div class="contact-card">
+          <div class="contact-card-heading">Coach</div>
+          <div class="contact-card-name">${ATHLETE.coachName}</div>
+          <div class="contact-card-team">${ATHLETE.coachTeam}</div>
+          <div class="contact-card-line">
+            <span class="contact-card-line-label">Phone</span>
+            <a href="tel:${ATHLETE.coachPhone}">${ATHLETE.coachPhone}</a>
+          </div>
+          <div class="contact-card-line">
+            <span class="contact-card-line-label">Email</span>
+            <a href="mailto:${ATHLETE.coachEmail}">${ATHLETE.coachEmail}</a>
+          </div>
+        </div>`;
+
+      let parentCard = '';
+      if (showParent) {
+        parentCard = `
+          <div class="contact-card">
+            <div class="contact-card-heading">Parent / Guardian</div>
+            <div class="contact-card-name">${ATHLETE.parentName}</div>
+            <div class="contact-card-line">
+              <span class="contact-card-line-label">Phone</span>
+              <a href="tel:${ATHLETE.parentPhone}">${ATHLETE.parentPhone}</a>
+            </div>
+            <div class="contact-card-line">
+              <span class="contact-card-line-label">Email</span>
+              <a href="mailto:${ATHLETE.parentEmail}">${ATHLETE.parentEmail}</a>
+            </div>
+          </div>`;
+      }
+
+      // Profile links
+      let profileLinks = '';
+      if (ATHLETE.sailRecruitURL || ATHLETE.techscoreURL) {
+        let links = '';
+        if (ATHLETE.sailRecruitURL) links += '<a href="' + ATHLETE.sailRecruitURL + '" target="_blank" rel="noopener">SailRecruit Profile</a>';
+        if (ATHLETE.techscoreURL) links += '<a href="' + ATHLETE.techscoreURL + '" target="_blank" rel="noopener">Techscore Profile</a>';
+        profileLinks = '<div class="contact-profiles">' + links + '</div>';
+      }
+
       el.innerHTML = `
         <h2 class="section-title">Contact</h2>
-        <p>Contact section placeholder</p>
+        <p class="contact-intro">I'd love to learn about your program. Please don't hesitate to reach out.</p>
+        <div class="contact-grid">${athleteCard}${coachCard}${parentCard}</div>
+        ${profileLinks}
       `;
+
+      // If no parent card, adjust grid to 2 columns on tablet+
+      if (!showParent) {
+        el.querySelector('.contact-grid').style.gridTemplateColumns = '';
+        var style = document.createElement('style');
+        style.textContent = '@media(min-width:768px){.contact-grid{grid-template-columns:1fr 1fr !important;max-width:640px;margin-left:auto;margin-right:auto;}}';
+        document.head.appendChild(style);
+      }
     }
 
     function renderFooter() {
       const el = document.getElementById('footer');
       el.innerHTML = `
-        <p><strong>${ATHLETE.name}</strong> · Class of ${ATHLETE.classYear}</p>
+        <p><strong>${ATHLETE.name}</strong> &middot; Class of ${ATHLETE.classYear}</p>
         <p>Last updated ${ATHLETE.lastUpdated}</p>
       `;
     }
