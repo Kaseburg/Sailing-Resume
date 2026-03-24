@@ -72,12 +72,32 @@
       text-decoration: none;
       transition: color .2s ease;
     }
-    a:focus-visible {
+    /* ── Focus States (accessibility) ── */
+    :focus-visible {
       outline: 2px solid var(--color-accent);
       outline-offset: 2px;
+    }
+    a:focus-visible {
       border-radius: 2px;
     }
     ul { list-style: none; }
+
+    /* ── Skip to Content Link (accessibility) ── */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      padding: 8px 16px;
+      background: var(--color-accent);
+      color: #000;
+      font-weight: 600;
+      font-size: .9rem;
+      z-index: 2000;
+      transition: top .2s ease;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
 
     /* ── Layout ────────────────────────────────────────── */
     .container {
@@ -1081,60 +1101,100 @@
        PRINT STYLESHEET
        ================================================================ */
     @media print {
-      nav, #hero, #video, .animate-on-scroll {
-        display: revert !important;
+      /* Hide non-essential elements */
+      nav,
+      #video,
+      #schedule,
+      .hero-cta,
+      .skip-link {
+        display: none !important;
+      }
+
+      /* Remove scroll animations */
+      .animate-on-scroll {
         opacity: 1 !important;
         transform: none !important;
       }
-      nav, #video, .hero-cta {
-        display: none !important;
-      }
-      #hero {
-        min-height: auto !important;
-        padding: 1rem 0 !important;
-        background: #fff !important;
-        color: #000 !important;
-      }
-      #hero.has-image::before { display: none !important; }
-      .hero-name { color: #000 !important; font-size: 1.5rem !important; }
-      .hero-subtitle { color: #333 !important; }
-      .hero-details { color: #333 !important; }
-      .hero-stat { background: #f0f0f0 !important; }
-      .hero-stat-value { color: #000 !important; }
-      .hero-stat-label { color: #555 !important; }
+
+      /* Reset body for print */
       body {
         font-size: 11pt;
         color: #000;
         background: #fff;
+        margin: 0;
+        padding: 0;
       }
+
+      /* Section resets */
       section {
-        padding: 12px 0 !important;
         page-break-inside: avoid;
+        margin: 0;
+        padding: 12px 0 !important;
+        background: #fff !important;
+        box-shadow: none !important;
       }
+
+      /* Hero — readable without background image */
+      #hero {
+        min-height: auto !important;
+        padding: 20px 0 !important;
+        background: #fff !important;
+        color: #000 !important;
+      }
+      #hero.has-image::before { display: none !important; }
+      #hero * { color: #000 !important; }
+      .hero-name { font-size: 1.5rem !important; }
+      .hero-stat {
+        background: #f5f5f5 !important;
+        border: 1px solid #ccc;
+      }
+
+      /* Contact section — print-friendly */
       #contact {
         background: #fff !important;
         color: #000 !important;
       }
-      #contact .section-title {
+      #contact * { color: #000 !important; }
+      .contact-card {
+        background: #f5f5f5 !important;
+        border: 1px solid #ddd;
+      }
+      .contact-card-heading { color: #333 !important; }
+      .contact-intro { color: #555 !important; }
+
+      /* Section titles */
+      .section-title {
         color: #000 !important;
       }
-      a {
-        color: #000;
-        text-decoration: none;
-      }
+
+      /* Link URLs after links */
+      a { color: #000; text-decoration: none; }
       a[href^="mailto"]::after,
       a[href^="tel"]::after {
         content: " (" attr(href) ")";
         font-size: 9pt;
       }
+
+      /* Force cards to have borders instead of shadows */
+      [class*="card"] {
+        box-shadow: none !important;
+        border: 1px solid #ddd;
+      }
+
+      /* Footer */
       footer {
         background: #fff !important;
         color: #333 !important;
+        padding: 12px 0 !important;
       }
+      footer strong { color: #000 !important; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Skip to content link for accessibility -->
+  <a href="#main" class="skip-link">Skip to main content</a>
 
   <!-- ============================================================
        NAVIGATION
@@ -1155,7 +1215,7 @@
     </ul>
   </nav>
 
-  <main>
+  <main id="main">
     <!-- ============================================================
          HERO SECTION
          ============================================================ -->
@@ -1241,7 +1301,7 @@
   <!-- ============================================================
        FOOTER
        ============================================================ -->
-  <footer id="footer">
+  <footer id="footer" aria-label="Page footer">
     <!-- Populated by JS -->
   </footer>
 
@@ -1403,6 +1463,7 @@
       if (ATHLETE.heroImage) {
         heroSection.classList.add('has-image');
         heroSection.style.backgroundImage = `url('${ATHLETE.heroImage}')`;
+        heroSection.setAttribute('aria-label', `${ATHLETE.name} sailing action photo`);
       }
 
       el.innerHTML = `
@@ -1729,47 +1790,47 @@
 
       // Build contact cards
       let athleteCard = `
-        <div class="contact-card">
+        <div class="contact-card" role="group" aria-label="Athlete contact">
           <div class="contact-card-heading">Athlete</div>
           <div class="contact-card-name">${ATHLETE.name}</div>
           <div class="contact-card-line">
             <span class="contact-card-line-label">Phone</span>
-            <a href="tel:${ATHLETE.phone}">${ATHLETE.phone}</a>
+            <a href="tel:${ATHLETE.phone}" aria-label="Call ${ATHLETE.name}">${ATHLETE.phone}</a>
           </div>
           <div class="contact-card-line">
             <span class="contact-card-line-label">Email</span>
-            <a href="mailto:${ATHLETE.email}">${ATHLETE.email}</a>
+            <a href="mailto:${ATHLETE.email}" aria-label="Email ${ATHLETE.name}">${ATHLETE.email}</a>
           </div>
         </div>`;
 
       let coachCard = `
-        <div class="contact-card">
+        <div class="contact-card" role="group" aria-label="Coach contact">
           <div class="contact-card-heading">Coach</div>
           <div class="contact-card-name">${ATHLETE.coachName}</div>
           <div class="contact-card-team">${ATHLETE.coachTeam}</div>
           <div class="contact-card-line">
             <span class="contact-card-line-label">Phone</span>
-            <a href="tel:${ATHLETE.coachPhone}">${ATHLETE.coachPhone}</a>
+            <a href="tel:${ATHLETE.coachPhone}" aria-label="Call ${ATHLETE.coachName}">${ATHLETE.coachPhone}</a>
           </div>
           <div class="contact-card-line">
             <span class="contact-card-line-label">Email</span>
-            <a href="mailto:${ATHLETE.coachEmail}">${ATHLETE.coachEmail}</a>
+            <a href="mailto:${ATHLETE.coachEmail}" aria-label="Email ${ATHLETE.coachName}">${ATHLETE.coachEmail}</a>
           </div>
         </div>`;
 
       let parentCard = '';
       if (showParent) {
         parentCard = `
-          <div class="contact-card">
+          <div class="contact-card" role="group" aria-label="Parent contact">
             <div class="contact-card-heading">Parent / Guardian</div>
             <div class="contact-card-name">${ATHLETE.parentName}</div>
             <div class="contact-card-line">
               <span class="contact-card-line-label">Phone</span>
-              <a href="tel:${ATHLETE.parentPhone}">${ATHLETE.parentPhone}</a>
+              <a href="tel:${ATHLETE.parentPhone}" aria-label="Call ${ATHLETE.parentName}">${ATHLETE.parentPhone}</a>
             </div>
             <div class="contact-card-line">
               <span class="contact-card-line-label">Email</span>
-              <a href="mailto:${ATHLETE.parentEmail}">${ATHLETE.parentEmail}</a>
+              <a href="mailto:${ATHLETE.parentEmail}" aria-label="Email ${ATHLETE.parentName}">${ATHLETE.parentEmail}</a>
             </div>
           </div>`;
       }
