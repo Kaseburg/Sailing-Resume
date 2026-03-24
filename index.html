@@ -535,6 +535,33 @@
        RESULTS SECTION
        ================================================================ */
 
+    /* ── Results Tabs ── */
+    .results-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: 1.5rem;
+    }
+    .results-tab {
+      padding: .5rem 1.25rem;
+      border: 2px solid var(--color-primary);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--color-primary);
+      font-family: var(--font-body);
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .results-tab:hover {
+      background: rgba(31,55,95,.1);
+    }
+    .results-tab.active {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
     /* ── Desktop Table (hidden on mobile) ── */
     .results-table-wrap {
       display: none;
@@ -1449,12 +1476,12 @@
 
     // ── Regatta Results (reverse-chronological, most significant only) ──
     const RESULTS = [
-      { date: "Mar 2026", regatta: "PCISA Golden Bear Regatta", division: "A Division", finish: 3, fleetSize: 24, role: "Skipper" },
-      { date: "Feb 2026", regatta: "PCISA South #4", division: "A Division", finish: 5, fleetSize: 18, role: "Skipper" },
-      { date: "Jan 2026", regatta: "ISSA Baker Team Race Qualifier", division: "Team Race", finish: 2, fleetSize: 12, role: "Skipper" },
-      { date: "Nov 2025", regatta: "PCISA North-South Intersectional", division: "B Division", finish: 1, fleetSize: 20, role: "Skipper" },
-      { date: "Oct 2025", regatta: "ISSA Mallory Qualifier — District 8", division: "A Division", finish: 4, fleetSize: 16, role: "Skipper" },
-      { date: "Sep 2025", regatta: "PCISA Season Opener", division: "A Division", finish: 2, fleetSize: 22, role: "Skipper" },
+      { date: "Mar 2026", regatta: "PCISA Golden Bear Regatta", division: "A Division", finish: 3, fleetSize: 24, role: "Skipper", category: "High School" },
+      { date: "Feb 2026", regatta: "PCISA South #4", division: "A Division", finish: 5, fleetSize: 18, role: "Skipper", category: "High School" },
+      { date: "Jan 2026", regatta: "ISSA Baker Team Race Qualifier", division: "Team Race", finish: 2, fleetSize: 12, role: "Skipper", category: "High School" },
+      { date: "Nov 2025", regatta: "PCISA North-South Intersectional", division: "B Division", finish: 1, fleetSize: 20, role: "Skipper", category: "High School" },
+      { date: "Oct 2025", regatta: "ISSA Mallory Qualifier — District 8", division: "A Division", finish: 4, fleetSize: 16, role: "Skipper", category: "High School" },
+      { date: "Sep 2025", regatta: "PCISA Season Opener", division: "A Division", finish: 2, fleetSize: 22, role: "Skipper", category: "High School" },
     ];
 
     // ── Upcoming Schedule ────────────────────────────────────────────────
@@ -1692,11 +1719,25 @@
       `;
     }
 
+    const RESULTS_CATEGORIES = ["High School", "29er", "420", "Keelboat", "Sabot"];
+    let activeResultsCategory = "High School";
+
     function renderResults() {
       const el = document.getElementById('results-content');
 
+      // Build tabs
+      const tabs = RESULTS_CATEGORIES.map(function(cat) {
+        const activeClass = cat === activeResultsCategory ? ' active' : '';
+        return '<button class="results-tab' + activeClass + '" data-category="' + cat + '">' + cat + '</button>';
+      }).join('');
+
+      // Filter results by active category
+      const filtered = RESULTS.filter(function(r) {
+        return r.category === activeResultsCategory;
+      });
+
       // Build table rows
-      const tableRows = RESULTS.map(function(r) {
+      const tableRows = filtered.map(function(r) {
         const pc = podiumClass(r.finish);
         const finishHTML = finishBadge(r.finish);
         return '<tr class="' + pc + '">'
@@ -1710,7 +1751,7 @@
       }).join('');
 
       // Build mobile cards
-      const cards = RESULTS.map(function(r) {
+      const cards = filtered.map(function(r) {
         const pc = podiumClass(r.finish);
         const finishHTML = finishBadge(r.finish);
         return '<div class="result-card ' + pc + '">'
@@ -1720,6 +1761,11 @@
           + '</div>';
       }).join('');
 
+      // Empty state
+      const emptyHTML = filtered.length === 0
+        ? '<p style="text-align:center;color:#888;padding:2rem 0;">No results yet for ' + activeResultsCategory + '.</p>'
+        : '';
+
       // Techscore link
       let footerHTML = '';
       if (ATHLETE.techscoreURL) {
@@ -1728,6 +1774,7 @@
 
       el.innerHTML = `
         <h2 class="section-title">Sailing Results</h2>
+        <div class="results-tabs">${tabs}</div>
         <div class="results-table-wrap">
           <table class="results-table">
             <thead>
@@ -1744,8 +1791,17 @@
           </table>
         </div>
         <div class="results-cards">${cards}</div>
+        ${emptyHTML}
         ${footerHTML}
       `;
+
+      // Attach tab click handlers
+      el.querySelectorAll('.results-tab').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          activeResultsCategory = btn.dataset.category;
+          renderResults();
+        });
+      });
     }
 
     function finishBadge(finish) {
