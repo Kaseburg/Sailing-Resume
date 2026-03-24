@@ -464,6 +464,166 @@
       line-height: 1.5;
     }
 
+    /* ================================================================
+       RESULTS SECTION
+       ================================================================ */
+
+    /* ── Desktop Table (hidden on mobile) ── */
+    .results-table-wrap {
+      display: none;
+    }
+    .results-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+    .results-table thead th {
+      background: var(--color-primary);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: .75rem 1rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .results-table tbody tr {
+      transition: background .15s ease;
+    }
+    .results-table tbody tr:nth-child(odd) { background: var(--color-surface); }
+    .results-table tbody tr:nth-child(even) { background: #F9FAFB; }
+    .results-table tbody tr:hover { background: #EEF2F7; }
+    .results-table tbody td {
+      padding: .75rem 1rem;
+      font-size: .9rem;
+      color: var(--color-text);
+      border-left: 4px solid transparent;
+    }
+    .results-table tbody td:first-child { border-left-width: 4px; }
+    .results-table tbody tr.podium-gold td:first-child { border-left-color: var(--color-gold); }
+    .results-table tbody tr.podium-silver td:first-child { border-left-color: var(--color-silver); }
+    .results-table tbody tr.podium-bronze td:first-child { border-left-color: var(--color-bronze); }
+    /* Only first td gets the left border */
+    .results-table tbody td:not(:first-child) { border-left: none; }
+
+    /* ── Podium Badge ── */
+    .podium-badge {
+      display: inline-block;
+      padding: .125rem .5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: .8rem;
+      line-height: 1.4;
+    }
+    .podium-badge-gold { background: var(--color-gold); color: #1a1a2e; }
+    .podium-badge-silver { background: var(--color-silver); color: #1a1a2e; }
+    .podium-badge-bronze { background: var(--color-bronze); color: #fff; }
+
+    /* ── Mobile Cards (shown on mobile, hidden on tablet+) ── */
+    .results-cards {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+    .result-card {
+      background: var(--color-surface);
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      padding: 1rem;
+      border-left: 4px solid transparent;
+    }
+    .result-card.podium-gold { border-left-color: var(--color-gold); }
+    .result-card.podium-silver { border-left-color: var(--color-silver); }
+    .result-card.podium-bronze { border-left-color: var(--color-bronze); }
+    .result-card-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: .2rem;
+    }
+    .result-card-meta {
+      font-size: .85rem;
+      color: var(--color-text-muted);
+      margin-bottom: .5rem;
+    }
+    .result-card-finish {
+      font-size: .9rem;
+      color: var(--color-text);
+    }
+
+    .results-footer {
+      margin-top: 1.25rem;
+      font-size: .85rem;
+      color: var(--color-text-muted);
+    }
+    .results-footer a {
+      color: var(--color-primary-light);
+      text-decoration: underline;
+    }
+    .results-footer a:hover {
+      color: var(--color-primary);
+    }
+
+    /* ================================================================
+       VIDEO SECTION
+       ================================================================ */
+    .video-caption {
+      font-size: .95rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+      margin-bottom: 1.25rem;
+      line-height: 1.6;
+    }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.1);
+      background: var(--color-primary);
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      color: rgba(255,255,255,.6);
+    }
+    .video-placeholder-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: .75rem;
+      opacity: .4;
+    }
+    .video-placeholder p {
+      font-size: .95rem;
+      line-height: 1.5;
+    }
+    .video-placeholder a {
+      color: var(--color-accent);
+      text-decoration: underline;
+    }
+    .video-placeholder a:hover {
+      color: #fff;
+    }
+
     /* ── Footer ────────────────────────────────────────── */
     footer {
       background: #0f2440;
@@ -655,6 +815,14 @@
       /* ── Athletics — tablet ── */
       .athletics-card {
         padding: 2rem;
+      }
+
+      /* ── Results — tablet: show table, hide cards ── */
+      .results-table-wrap {
+        display: block;
+      }
+      .results-cards {
+        display: none;
       }
     }
 
@@ -1237,17 +1405,99 @@
 
     function renderResults() {
       const el = document.getElementById('results-content');
+
+      // Build table rows
+      const tableRows = RESULTS.map(function(r) {
+        const pc = podiumClass(r.finish);
+        const finishHTML = finishBadge(r.finish);
+        return '<tr class="' + pc + '">'
+          + '<td>' + r.date + '</td>'
+          + '<td>' + r.regatta + '</td>'
+          + '<td>' + r.division + '</td>'
+          + '<td>' + r.role + '</td>'
+          + '<td>' + finishHTML + '</td>'
+          + '<td>' + r.fleetSize + ' boats</td>'
+          + '</tr>';
+      }).join('');
+
+      // Build mobile cards
+      const cards = RESULTS.map(function(r) {
+        const pc = podiumClass(r.finish);
+        const finishHTML = finishBadge(r.finish);
+        return '<div class="result-card ' + pc + '">'
+          + '<div class="result-card-name">' + r.regatta + '</div>'
+          + '<div class="result-card-meta">' + r.date + ' &middot; ' + r.division + ' &middot; ' + r.role + '</div>'
+          + '<div class="result-card-finish">' + finishHTML + ' of ' + r.fleetSize + ' boats</div>'
+          + '</div>';
+      }).join('');
+
+      // Techscore link
+      let footerHTML = '';
+      if (ATHLETE.techscoreURL) {
+        footerHTML = '<div class="results-footer"><a href="' + ATHLETE.techscoreURL + '" target="_blank" rel="noopener">View full results on Techscore</a></div>';
+      }
+
       el.innerHTML = `
         <h2 class="section-title">Sailing Results</h2>
-        <p>${RESULTS.length} results loaded</p>
+        <div class="results-table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Regatta</th>
+                <th>Division</th>
+                <th>Role</th>
+                <th>Finish</th>
+                <th>Fleet</th>
+              </tr>
+            </thead>
+            <tbody>${tableRows}</tbody>
+          </table>
+        </div>
+        <div class="results-cards">${cards}</div>
+        ${footerHTML}
       `;
+    }
+
+    function finishBadge(finish) {
+      const o = ordinal(finish);
+      if (finish === 1) return '<span class="podium-badge podium-badge-gold">' + o + '</span>';
+      if (finish === 2) return '<span class="podium-badge podium-badge-silver">' + o + '</span>';
+      if (finish === 3) return '<span class="podium-badge podium-badge-bronze">' + o + '</span>';
+      return o;
     }
 
     function renderVideo() {
       const el = document.getElementById('video-content');
+      const hasVideo = ATHLETE.videoURL && ATHLETE.videoURL !== '#' && ATHLETE.videoURL !== '';
+
+      let videoHTML;
+      if (hasVideo) {
+        videoHTML = `
+          <div class="video-container">
+            <iframe src="${ATHLETE.videoURL}" title="Sailing Highlight Video"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>`;
+      } else {
+        videoHTML = `
+          <div class="video-container">
+            <div class="video-placeholder">
+              <svg class="video-placeholder-icon" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M19 33V15l16 9-16 9z"/>
+                <rect x="2" y="8" width="44" height="32" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/>
+              </svg>
+              <p>Highlight video coming soon<br>
+              <a href="mailto:${ATHLETE.email}">Contact me for race footage</a></p>
+            </div>
+          </div>`;
+      }
+
       el.innerHTML = `
         <h2 class="section-title">Sailing Highlight Video</h2>
-        <p>Video section placeholder</p>
+        <p class="video-caption">${ATHLETE.videoCaption}</p>
+        ${videoHTML}
       `;
     }
 
