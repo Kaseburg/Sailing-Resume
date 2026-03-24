@@ -23,25 +23,11 @@
 
   <style>
     /* ================================================================
-       CSS — PHASE 0 SCAFFOLDING
-       Mobile-first design, CSS custom properties, minimal resets
+       CSS — PHASE 1: Foundation, Navigation, Scroll Animations
+       Mobile-first responsive design with breakpoints at 768px & 1024px
        ================================================================ */
 
-    /* ── Reset ──────────────────────────────────────────── */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 60px; }
-    body {
-      font-family: 'DM Sans', system-ui, sans-serif;
-      color: var(--color-text);
-      background: var(--color-bg);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
-
-    /* ── Color Palette ─────────────────────────────────── */
+    /* ── CSS Custom Properties ─────────────────────────── */
     :root {
       --color-primary: #1B3A5C;
       --color-primary-light: #2A5A8C;
@@ -59,20 +45,59 @@
       --font-body: 'DM Sans', system-ui, sans-serif;
       --nav-height: 60px;
       --max-width: 960px;
-      --section-pad-mobile: 3.5rem 1rem;
-      --section-pad-tablet: 5rem 2rem;
-      --section-pad-desktop: 6rem 2rem;
     }
 
-    /* ── Shared Section Styles ─────────────────────────── */
-    .container { max-width: var(--max-width); margin: 0 auto; }
-    section { padding: var(--section-pad-mobile); }
+    /* ── Reset ──────────────────────────────────────────── */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 70px;
+    }
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--color-text);
+      background: var(--color-bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img { max-width: 100%; display: block; }
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+    a:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+    ul { list-style: none; }
 
+    /* ── Layout ────────────────────────────────────────── */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ── Section Spacing — Mobile-first (60px) ─────────── */
+    section {
+      padding: 3.75rem 1rem;
+    }
+
+    /* ── Section Title — Left-aligned with gold accent bar */
     .section-title {
       font-family: var(--font-heading);
       font-size: 1.6rem;
+      font-weight: 700;
       color: var(--color-primary);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       gap: .6rem;
@@ -81,24 +106,56 @@
       content: '';
       display: inline-block;
       width: 4px;
-      height: 1.4em;
+      height: 1.3em;
       background: var(--color-accent);
       border-radius: 2px;
       flex-shrink: 0;
     }
 
-    /* ── Scroll Reveal Animation ───────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity .4s ease, transform .4s ease;
+    /* ── Alternating Section Backgrounds ───────────────── */
+    #about { background: var(--color-surface); }
+    #sailing-experience { background: var(--color-bg); }
+    #academics { background: var(--color-surface); }
+    #athletics-activities { background: var(--color-bg); }
+    #results { background: var(--color-surface); }
+    #video { background: var(--color-bg); }
+    #schedule { background: var(--color-surface); }
+    #contact {
+      background: var(--color-primary);
+      color: #fff;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    #contact .section-title {
+      color: #fff;
     }
 
-    /* ── Navigation ────────────────────────────────────── */
+    /* ── Hero (placeholder — will be fully styled in Phase 2) */
+    #hero {
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      background: var(--color-primary);
+      padding: 5rem 1rem 4rem;
+    }
+
+    /* ── Footer ────────────────────────────────────────── */
+    footer {
+      background: #0f2440;
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: .85rem;
+    }
+    footer strong { color: var(--color-accent); }
+
+    /* ================================================================
+       NAVIGATION — Mobile-first
+       Mobile (<1024px): sticky bar + full-screen overlay
+       Desktop (1024px+): sticky bar with horizontal links
+       ================================================================ */
     nav {
       position: sticky;
       top: 0;
@@ -109,41 +166,23 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 1rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,.25);
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
     }
+
+    /* ── Brand / Home Link ── */
     nav .brand {
       font-family: var(--font-heading);
       font-weight: 700;
       font-size: 1.1rem;
       color: var(--color-accent);
       white-space: nowrap;
+      z-index: 1010;
     }
-    nav .brand a { color: inherit; }
-    nav ul {
-      display: none;
-      position: absolute;
-      top: var(--nav-height);
-      left: 0;
-      right: 0;
-      background: var(--color-primary);
-      flex-direction: column;
-      padding: .5rem 1rem 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,.25);
+    nav .brand a {
+      color: inherit;
     }
-    nav ul.open { display: flex; }
-    nav ul li a {
-      display: block;
-      padding: .65rem 0;
-      color: rgba(255,255,255,.85);
-      font-size: .9rem;
-      font-weight: 500;
-      letter-spacing: .3px;
-      transition: color .2s;
-    }
-    nav ul li a:hover,
-    nav ul li a:focus { color: var(--color-accent); }
-    nav ul li a.active { color: var(--color-accent); }
-    nav ul li a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 2px; }
+
+    /* ── Hamburger Button (visible below 1024px) ── */
     .menu-toggle {
       display: flex;
       flex-direction: column;
@@ -156,6 +195,7 @@
       min-height: 44px;
       align-items: center;
       justify-content: center;
+      z-index: 1010;
     }
     .menu-toggle span {
       display: block;
@@ -163,80 +203,195 @@
       height: 2px;
       background: #fff;
       border-radius: 1px;
-      transition: transform .3s, opacity .3s;
+      transition: transform .3s ease, opacity .3s ease;
     }
-    .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .menu-toggle.open span:nth-child(2) { opacity: 0; }
-    .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    /* ── Hamburger → X animation ── */
+    .menu-toggle.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
 
-    /* ── Hero (placeholder structure) ──────────────────── */
-    #hero {
-      position: relative;
-      min-height: 480px;
+    /* ── Mobile Nav: Full-Screen Overlay ── */
+    nav ul {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--color-primary);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
-      color: #fff;
-      background: var(--color-primary);
-      padding: 4rem 1rem 3rem;
+      gap: .5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .3s ease, visibility .3s ease;
+    }
+    nav ul.open {
+      opacity: 1;
+      visibility: visible;
     }
 
-    /* ── Alternating Section Backgrounds ───────────────── */
-    #about { background: var(--color-surface); }
-    #sailing-experience { background: var(--color-bg); }
-    #academics { background: var(--color-surface); }
-    #athletics-activities { background: var(--color-bg); }
-    #results { background: var(--color-surface); }
-    #video { background: var(--color-bg); }
-    #schedule { background: var(--color-surface); }
-    #contact { background: var(--color-primary); color: #fff; }
-    #contact .section-title { color: #fff; }
-
-    /* ── Footer ────────────────────────────────────────── */
-    footer {
-      background: #0f2440;
-      color: rgba(255,255,255,.5);
+    nav ul li a {
+      display: block;
+      padding: .85rem 1.5rem;
+      color: rgba(255,255,255,.8);
+      font-size: 1.25rem;
+      font-weight: 500;
+      letter-spacing: .5px;
       text-align: center;
-      padding: 1.5rem 1rem;
-      font-size: .8rem;
+      transition: color .2s ease;
     }
-    footer strong { color: var(--color-accent); }
+    nav ul li a:hover,
+    nav ul li a:focus {
+      color: var(--color-accent);
+    }
+    nav ul li a.active {
+      color: var(--color-accent);
+    }
 
-    /* ── Tablet (768px+) ───────────────────────────────── */
+    /* ================================================================
+       SCROLL ANIMATION — Fade-in on scroll
+       Applied via .animate-on-scroll class on section containers
+       ================================================================ */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ================================================================
+       TABLET BREAKPOINT — 768px+
+       ================================================================ */
     @media (min-width: 768px) {
-      section { padding: var(--section-pad-tablet); }
-      nav { padding: 0 2rem; }
+      section {
+        padding: 5rem 2rem;
+      }
+      nav {
+        padding: 0 2rem;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+      footer {
+        padding: 2rem 2rem;
+      }
+    }
+
+    /* ================================================================
+       DESKTOP BREAKPOINT — 1024px+
+       ================================================================ */
+    @media (min-width: 1024px) {
+      section {
+        padding: 6.25rem 2rem;
+      }
+
+      /* ── Desktop Nav: horizontal links, no hamburger ── */
+      .menu-toggle {
+        display: none;
+      }
+      nav {
+        padding: 0 2.5rem;
+      }
       nav ul {
-        display: flex;
+        /* Override mobile overlay styles */
         position: static;
         flex-direction: row;
-        gap: 1.5rem;
-        padding: 0;
-        box-shadow: none;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0;
+        opacity: 1;
+        visibility: visible;
         background: transparent;
       }
-      nav ul li a { font-size: .8rem; text-transform: uppercase; letter-spacing: .5px; padding: 0; }
-      .menu-toggle { display: none; }
-      .section-title { font-size: 1.8rem; }
+      nav ul li a {
+        font-size: .8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .6px;
+        padding: .5rem .85rem;
+        position: relative;
+      }
+      /* ── Desktop hover underline effect ── */
+      nav ul li a::after {
+        content: '';
+        position: absolute;
+        bottom: 2px;
+        left: .85rem;
+        right: .85rem;
+        height: 2px;
+        background: var(--color-accent);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform .25s ease;
+      }
+      nav ul li a:hover::after,
+      nav ul li a.active::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
     }
 
-    /* ── Desktop (1024px+) ─────────────────────────────── */
-    @media (min-width: 1024px) {
-      section { padding: var(--section-pad-desktop); }
+    /* ================================================================
+       LARGE DESKTOP — 1280px+
+       ================================================================ */
+    @media (min-width: 1280px) {
+      nav {
+        padding: 0 3rem;
+      }
     }
 
-    /* ── Print Stylesheet ──────────────────────────────── */
+    /* ================================================================
+       PRINT STYLESHEET
+       ================================================================ */
     @media print {
-      nav, #hero, #video, .reveal { display: none !important; }
-      body { font-size: 11pt; color: #000; background: #fff; }
-      section { padding: 12px 0 !important; page-break-inside: avoid; }
-      #contact { background: #fff !important; color: #000 !important; }
-      #contact .section-title { color: #000 !important; }
-      a { color: #000; text-decoration: none; }
+      nav, #hero, #video, .animate-on-scroll {
+        display: revert !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      nav, #video {
+        display: none !important;
+      }
+      body {
+        font-size: 11pt;
+        color: #000;
+        background: #fff;
+      }
+      section {
+        padding: 12px 0 !important;
+        page-break-inside: avoid;
+      }
+      #contact {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      #contact .section-title {
+        color: #000 !important;
+      }
+      a {
+        color: #000;
+        text-decoration: none;
+      }
       a[href^="mailto"]::after,
-      a[href^="tel"]::after { content: " (" attr(href) ")"; font-size: 9pt; }
-      footer { background: #fff !important; color: #333 !important; }
+      a[href^="tel"]::after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+      }
+      footer {
+        background: #fff !important;
+        color: #333 !important;
+      }
     }
   </style>
 </head>
@@ -252,7 +407,7 @@
     </button>
     <ul id="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#sailing-experience">Experience</a></li>
+      <li><a href="#sailing-experience">Sailing</a></li>
       <li><a href="#academics">Academics</a></li>
       <li><a href="#results">Results</a></li>
       <li><a href="#video">Video</a></li>
@@ -275,7 +430,7 @@
          ABOUT SECTION
          ============================================================ -->
     <section id="about" aria-label="About the athlete">
-      <div class="container reveal" id="about-content">
+      <div class="container animate-on-scroll" id="about-content">
         <!-- Populated by JS -->
       </div>
     </section>
@@ -284,7 +439,7 @@
          SAILING EXPERIENCE SECTION (NEW)
          ============================================================ -->
     <section id="sailing-experience" aria-label="Sailing experience">
-      <div class="container reveal" id="sailing-experience-content">
+      <div class="container animate-on-scroll" id="sailing-experience-content">
         <!-- Populated by JS -->
       </div>
     </section>
@@ -293,7 +448,7 @@
          ACADEMICS SECTION
          ============================================================ -->
     <section id="academics" aria-label="Academic information">
-      <div class="container reveal" id="academics-content">
+      <div class="container animate-on-scroll" id="academics-content">
         <!-- Populated by JS -->
       </div>
     </section>
@@ -302,7 +457,7 @@
          ATHLETICS & ACTIVITIES SECTION (NEW)
          ============================================================ -->
     <section id="athletics-activities" aria-label="Athletics and activities">
-      <div class="container reveal" id="athletics-content">
+      <div class="container animate-on-scroll" id="athletics-content">
         <!-- Populated by JS -->
       </div>
     </section>
@@ -311,7 +466,7 @@
          SAILING RESULTS SECTION
          ============================================================ -->
     <section id="results" aria-label="Sailing results">
-      <div class="container reveal" id="results-content">
+      <div class="container animate-on-scroll" id="results-content">
         <!-- Populated by JS -->
       </div>
     </section>
@@ -320,7 +475,7 @@
          VIDEO SECTION
          ============================================================ -->
     <section id="video" aria-label="Highlight video">
-      <div class="container reveal" id="video-content">
+      <div class="container animate-on-scroll" id="video-content">
         <!-- Populated by JS -->
       </div>
     </section>
@@ -329,7 +484,7 @@
          SCHEDULE SECTION
          ============================================================ -->
     <section id="schedule" aria-label="Upcoming schedule">
-      <div class="container reveal" id="schedule-content">
+      <div class="container animate-on-scroll" id="schedule-content">
         <!-- Populated by JS -->
       </div>
     </section>
@@ -338,7 +493,7 @@
          CONTACT SECTION
          ============================================================ -->
     <section id="contact" aria-label="Contact information">
-      <div class="container reveal" id="contact-content">
+      <div class="container animate-on-scroll" id="contact-content">
         <!-- Populated by JS -->
       </div>
     </section>
@@ -419,13 +574,13 @@
       parentPhone: "[Phone Number]",
 
       // ── Links & Media ─────────────────────────────────────
-      resumePDF: "#",              // URL to downloadable PDF resume
-      videoURL: "",                // YouTube embed URL (leave empty for placeholder)
+      resumePDF: "#",
+      videoURL: "",
       videoCaption: "[Race footage from Event Name, Date. Watch for tactical positioning at the start and mark roundings.]",
-      heroImage: "",               // Hero background image path (leave empty for solid color)
-      headshotImage: "",           // Headshot image path (leave empty for placeholder)
-      sailRecruitURL: "",          // SailRecruit profile URL (optional)
-      techscoreURL: "",            // Techscore profile URL (optional)
+      heroImage: "",
+      headshotImage: "",
+      sailRecruitURL: "",
+      techscoreURL: "",
 
       // ── Meta ───────────────────────────────────────────────
       lastUpdated: "[Month Year]"
@@ -465,38 +620,20 @@
       // ── Nav brand ──
       document.getElementById('nav-brand').textContent = ATHLETE.name;
 
-      // ── Hero ──
+      // ── Render all sections ──
       renderHero();
-
-      // ── About ──
       renderAbout();
-
-      // ── Sailing Experience ──
       renderSailingExperience();
-
-      // ── Academics ──
       renderAcademics();
-
-      // ── Athletics & Activities ──
       renderAthletics();
-
-      // ── Results ──
       renderResults();
-
-      // ── Video ──
       renderVideo();
-
-      // ── Schedule ──
       renderSchedule();
-
-      // ── Contact ──
       renderContact();
-
-      // ── Footer ──
       renderFooter();
     }
 
-    // ── Helper: set meta tags ──
+    // ── Helpers ──
     function setMeta(name, content) {
       const el = document.querySelector(`meta[name="${name}"]`);
       if (el) el.setAttribute('content', content);
@@ -505,15 +642,11 @@
       const el = document.querySelector(`meta[property="${property}"]`);
       if (el) el.setAttribute('content', content);
     }
-
-    // ── Ordinal suffix (1st, 2nd, 3rd, etc.) ──
     function ordinal(n) {
       const s = ['th','st','nd','rd'];
       const v = n % 100;
       return n + (s[(v - 20) % 10] || s[v] || s[0]);
     }
-
-    // ── Podium class ──
     function podiumClass(finish) {
       if (finish === 1) return 'podium-gold';
       if (finish === 2) return 'podium-silver';
@@ -521,7 +654,7 @@
       return '';
     }
 
-    // ── Section Renderers (placeholders — will be built out in subsequent phases) ──
+    // ── Section Renderers (placeholder content — built out in later phases) ──
 
     function renderHero() {
       const el = document.getElementById('hero-content');
@@ -608,38 +741,44 @@
 
 
     // ╔════════════════════════════════════════════════════════════╗
-    // ║  INTERACTIONS — Nav, scroll reveal, active section        ║
+    // ║  INTERACTIONS — Nav, scroll animations, active section    ║
     // ╚════════════════════════════════════════════════════════════╝
 
-    // ── Mobile hamburger menu ──
+    // ── Mobile hamburger menu (full-screen overlay) ──
     const menuToggle = document.getElementById('menu-toggle');
     const navLinks = document.getElementById('nav-links');
+
     menuToggle.addEventListener('click', function() {
-      menuToggle.classList.toggle('open');
+      const isOpen = menuToggle.classList.toggle('open');
       navLinks.classList.toggle('open');
+      // Prevent body scroll when overlay is open
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
-    // Close menu on link click
+
+    // Close overlay on link click
     navLinks.querySelectorAll('a').forEach(function(link) {
       link.addEventListener('click', function() {
         menuToggle.classList.remove('open');
         navLinks.classList.remove('open');
+        document.body.style.overflow = '';
       });
     });
 
-    // ── Scroll reveal (Intersection Observer) ──
-    const revealObserver = new IntersectionObserver(function(entries) {
+    // ── Scroll reveal animation (Intersection Observer) ──
+    const animateObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          animateObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      revealObserver.observe(el);
+    document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+      animateObserver.observe(el);
     });
 
-    // ── Active nav link highlight (Intersection Observer) ──
+    // ── Active nav link highlighting (Intersection Observer) ──
     const sections = document.querySelectorAll('main section[id]');
     const navItems = document.querySelectorAll('#nav-links a');
 
