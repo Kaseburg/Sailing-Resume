@@ -297,8 +297,11 @@
     }
     .logos-bar img {
       height: 80px;
+      max-height: 12vw;
       width: auto;
       object-fit: contain;
+      flex-shrink: 1;
+      min-width: 0;
     }
 
     /* ================================================================
@@ -348,19 +351,20 @@
        ================================================================ */
     .boat-classes-grid {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: center;
+      align-items: center;
       gap: 1.5rem;
       margin-bottom: 1.75rem;
+      padding: 0 1rem;
     }
     .boat-classes-grid img {
-      height: 120px;
+      height: 80px;
+      max-height: 12vw;
       width: auto;
       object-fit: contain;
-      border-radius: 12px;
-      background: var(--color-surface);
-      box-shadow: 0 1px 4px rgba(0,0,0,.06);
-      padding: 1rem;
+      flex-shrink: 1;
+      min-width: 0;
     }
     .sailing-info-card {
       background: var(--color-surface);
@@ -970,6 +974,11 @@
     /* ================================================================
        TABLET BREAKPOINT — 768px+
        ================================================================ */
+    @media (max-width: 480px) {
+      .logos-bar { gap: 1rem; }
+      .boat-classes-grid { gap: .75rem; }
+    }
+
     @media (min-width: 768px) {
       section {
         padding: 5rem 2rem;
