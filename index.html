@@ -346,6 +346,22 @@
     /* ================================================================
        SAILING EXPERIENCE SECTION
        ================================================================ */
+    .boat-classes-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .boat-classes-grid img {
+      height: 120px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      background: var(--color-surface);
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      padding: 1rem;
+    }
     .sailing-info-card {
       background: var(--color-surface);
       border-radius: 12px;
@@ -1568,25 +1584,12 @@
 
       el.innerHTML = `
         <h2 class="section-title">Sailing Experience</h2>
-        <div class="sailing-info-card">
-          <div class="sailing-info-top">
-            <div>
-              <div class="sailing-info-item-label">Primary Position</div>
-              <div class="sailing-info-item-value">${ATHLETE.position}</div>
-            </div>
-            <div>
-              <div class="sailing-info-item-label">Years Racing</div>
-              <div class="sailing-info-item-value">${ATHLETE.yearsRacing}</div>
-            </div>
-          </div>
-          <div class="sailing-info-row">
-            <div class="sailing-info-row-label">Boat Classes</div>
-            <div class="sailing-info-row-value">${ATHLETE.boatClasses.join(', ')}</div>
-          </div>
-          <div class="sailing-info-row">
-            <div class="sailing-info-row-label">Disciplines</div>
-            <div class="sailing-info-row-value">${ATHLETE.disciplines.join(', ')}</div>
-          </div>
+        <div class="boat-classes-grid">
+          <img src="images/usa-29er.png" alt="29er">
+          <img src="images/fj.png" alt="FJ">
+          <img src="images/420.png" alt="420">
+          <img src="images/snipe.png" alt="Snipe">
+          <img src="images/moth.png" alt="Moth">
         </div>
 
         <h3 class="sailing-sub-heading">Training &amp; Coaching</h3>
