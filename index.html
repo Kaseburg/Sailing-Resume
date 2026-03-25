@@ -1471,7 +1471,7 @@
       techscoreURL: "",
 
       // ── Meta ───────────────────────────────────────────────
-      lastUpdated: "[Month Year]"
+      lastUpdated: "[Month Year]" // Optional manual fallback
     };
 
     // ── Regatta Results (reverse-chronological, most significant only) ──
@@ -1966,11 +1966,24 @@
       }
     }
 
+
+    function getLastUpdatedLabel() {
+      const parsed = Date.parse(document.lastModified);
+      if (!Number.isNaN(parsed)) {
+        return new Date(parsed).toLocaleDateString(undefined, {
+          year: 'numeric',
+          month: 'long'
+        });
+      }
+      return ATHLETE.lastUpdated;
+    }
+
     function renderFooter() {
       const el = document.getElementById('footer');
+      const lastUpdatedLabel = getLastUpdatedLabel();
       el.innerHTML = `
         <p><strong>${ATHLETE.name}</strong> &middot; Class of ${ATHLETE.classYear}</p>
-        <p>Last updated ${ATHLETE.lastUpdated}</p>
+        <p>Last updated ${lastUpdatedLabel}</p>
       `;
     }
 
