@@ -863,6 +863,25 @@
       color: #fff;
       text-decoration: underline;
     }
+    .contact-card-rec-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: .5rem 1rem;
+      background: var(--color-accent);
+      color: #1a2744 !important;
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      border-radius: 6px;
+      text-decoration: none !important;
+      transition: background .2s ease;
+    }
+    .contact-card-rec-btn:hover {
+      background: var(--color-accent-hover);
+      color: #1a2744 !important;
+      text-decoration: none !important;
+    }
 
     .contact-profiles {
       margin-top: 1.5rem;
@@ -1240,6 +1259,10 @@
       }
       .contact-card-heading { color: #333 !important; }
       .contact-intro { color: #555 !important; }
+      .contact-card-rec-btn {
+        background: #C9A84C !important;
+        color: #1a2744 !important;
+      }
 
       /* Section titles */
       .section-title {
@@ -1456,6 +1479,17 @@
       coachTeam: "[School Name] Sailing Team",
       coachEmail: "[coach@email.com]",
       coachPhone: "[Phone Number]",
+      coachLetterURL: "",
+      coach2Name: "[Coach 2 Name]",
+      coach2Team: "[School Name] Sailing Team",
+      coach2Email: "[coach2@email.com]",
+      coach2Phone: "[Phone Number]",
+      coach2LetterURL: "",
+      coach3Name: "[Coach 3 Name]",
+      coach3Team: "[School Name] Sailing Team",
+      coach3Email: "[coach3@email.com]",
+      coach3Phone: "[Phone Number]",
+      coach3LetterURL: "",
       parentName: "[Parent/Guardian Name]",
       parentEmail: "[parent@email.com]",
       parentPhone: "[Phone Number]",
@@ -1909,6 +1943,7 @@
           </div>
         </div>`;
 
+      let coachLetterBtn = ATHLETE.coachLetterURL ? `<a href="${ATHLETE.coachLetterURL}" target="_blank" rel="noopener" class="contact-card-rec-btn">Letter of Recommendation</a>` : '';
       let coachCard = `
         <div class="contact-card" role="group" aria-label="Coach contact">
           <div class="contact-card-heading">Coach</div>
@@ -1922,7 +1957,48 @@
             <span class="contact-card-line-label">Email</span>
             <a href="mailto:${ATHLETE.coachEmail}" aria-label="Email ${ATHLETE.coachName}">${ATHLETE.coachEmail}</a>
           </div>
+          ${coachLetterBtn}
         </div>`;
+
+      let coach2Card = '';
+      if (!isPlaceholder(ATHLETE.coach2Name)) {
+        let coach2LetterBtn = ATHLETE.coach2LetterURL ? `<a href="${ATHLETE.coach2LetterURL}" target="_blank" rel="noopener" class="contact-card-rec-btn">Letter of Recommendation</a>` : '';
+        coach2Card = `
+          <div class="contact-card" role="group" aria-label="Coach 2 contact">
+            <div class="contact-card-heading">Coach</div>
+            <div class="contact-card-name">${ATHLETE.coach2Name}</div>
+            <div class="contact-card-team">${ATHLETE.coach2Team}</div>
+            <div class="contact-card-line">
+              <span class="contact-card-line-label">Phone</span>
+              <a href="tel:${ATHLETE.coach2Phone}" aria-label="Call ${ATHLETE.coach2Name}">${ATHLETE.coach2Phone}</a>
+            </div>
+            <div class="contact-card-line">
+              <span class="contact-card-line-label">Email</span>
+              <a href="mailto:${ATHLETE.coach2Email}" aria-label="Email ${ATHLETE.coach2Name}">${ATHLETE.coach2Email}</a>
+            </div>
+            ${coach2LetterBtn}
+          </div>`;
+      }
+
+      let coach3Card = '';
+      if (!isPlaceholder(ATHLETE.coach3Name)) {
+        let coach3LetterBtn = ATHLETE.coach3LetterURL ? `<a href="${ATHLETE.coach3LetterURL}" target="_blank" rel="noopener" class="contact-card-rec-btn">Letter of Recommendation</a>` : '';
+        coach3Card = `
+          <div class="contact-card" role="group" aria-label="Coach 3 contact">
+            <div class="contact-card-heading">Coach</div>
+            <div class="contact-card-name">${ATHLETE.coach3Name}</div>
+            <div class="contact-card-team">${ATHLETE.coach3Team}</div>
+            <div class="contact-card-line">
+              <span class="contact-card-line-label">Phone</span>
+              <a href="tel:${ATHLETE.coach3Phone}" aria-label="Call ${ATHLETE.coach3Name}">${ATHLETE.coach3Phone}</a>
+            </div>
+            <div class="contact-card-line">
+              <span class="contact-card-line-label">Email</span>
+              <a href="mailto:${ATHLETE.coach3Email}" aria-label="Email ${ATHLETE.coach3Name}">${ATHLETE.coach3Email}</a>
+            </div>
+            ${coach3LetterBtn}
+          </div>`;
+      }
 
       let parentCard = '';
       if (showParent) {
@@ -1953,17 +2029,21 @@
       el.innerHTML = `
         <h2 class="section-title">Contact</h2>
         <p class="contact-intro">I'd love to learn about your program. Please don't hesitate to reach out.</p>
-        <div class="contact-grid">${athleteCard}${coachCard}${parentCard}</div>
+        <div class="contact-grid">${athleteCard}${coachCard}${coach2Card}${coach3Card}${parentCard}</div>
         ${profileLinks}
       `;
 
-      // If no parent card, adjust grid to 2 columns on tablet+
-      if (!showParent) {
-        el.querySelector('.contact-grid').style.gridTemplateColumns = '';
-        var style = document.createElement('style');
+      // Adjust grid columns based on number of cards
+      var cardCount = el.querySelectorAll('.contact-card').length;
+      var style = document.createElement('style');
+      if (cardCount <= 2) {
         style.textContent = '@media(min-width:768px){.contact-grid{grid-template-columns:1fr 1fr !important;max-width:640px;margin-left:auto;margin-right:auto;}}';
-        document.head.appendChild(style);
+      } else if (cardCount === 3) {
+        style.textContent = '@media(min-width:768px){.contact-grid{grid-template-columns:repeat(3,1fr) !important;}}';
+      } else {
+        style.textContent = '@media(min-width:768px){.contact-grid{grid-template-columns:repeat(2,1fr) !important;}}@media(min-width:1024px){.contact-grid{grid-template-columns:repeat(4,1fr) !important;}}';
       }
+      document.head.appendChild(style);
     }
 
 
