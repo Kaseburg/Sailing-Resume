@@ -1516,12 +1516,60 @@
 
     // ── Regatta Results (reverse-chronological, most significant only) ──
     const RESULTS = [
-      { date: "Mar 2026", regatta: "PCISA Golden Bear Regatta", division: "A Division", finish: 3, fleetSize: 24, role: "Skipper", category: "High School" },
-      { date: "Feb 2026", regatta: "PCISA South #4", division: "A Division", finish: 5, fleetSize: 18, role: "Skipper", category: "High School" },
-      { date: "Jan 2026", regatta: "ISSA Baker Team Race Qualifier", division: "Team Race", finish: 2, fleetSize: 12, role: "Skipper", category: "High School" },
-      { date: "Nov 2025", regatta: "PCISA North-South Intersectional", division: "B Division", finish: 1, fleetSize: 20, role: "Skipper", category: "High School" },
-      { date: "Oct 2025", regatta: "ISSA Mallory Qualifier — District 8", division: "A Division", finish: 4, fleetSize: 16, role: "Skipper", category: "High School" },
-      { date: "Sep 2025", regatta: "PCISA Season Opener", division: "A Division", finish: 2, fleetSize: 22, role: "Skipper", category: "High School" },
+      // 29er
+      { date: "2025", regatta: "29er World Sailing Championship", division: "", finish: 36, fleetSize: null, role: "", category: "29er" },
+      { date: "2025", regatta: "29er Nationals", division: "", finish: 2, fleetSize: null, role: "", category: "29er" },
+      { date: "2025", regatta: "San Diego Olympic Classes Regatta", division: "", finish: 3, fleetSize: null, role: "", category: "29er" },
+      { date: "2025", regatta: "Santa Barbara Spring Dinghy Regatta, Hamlin #4", division: "", finish: 3, fleetSize: null, role: "", category: "29er" },
+      { date: "2025", regatta: "29er Midwinters East Championship", division: "", finish: 3, fleetSize: null, role: "", category: "29er" },
+      { date: "2025", regatta: "29er Midwinters West, Hamlin #3", division: "", finish: 5, fleetSize: null, role: "", category: "29er" },
+      { date: "2025", regatta: "SDAYC Luff-In Regatta #1", division: "", finish: 3, fleetSize: null, role: "", category: "29er" },
+      { date: "2024", regatta: "Open Orange Bowl Regatta", division: "", finish: 4, fleetSize: 17, role: "", category: "29er" },
+      { date: "2024", regatta: "ABYC Turkey Day Regatta, Hamlin #2", division: "", finish: 2, fleetSize: 10, role: "", category: "29er" },
+      { date: "2024", regatta: "St. Francis Yacht Club Fall Dinghy Regatta", division: "", finish: 4, fleetSize: 14, role: "", category: "29er" },
+      { date: "2024", regatta: "SDAYC Double-Handed Luff-In Coronado", division: "", finish: 4, fleetSize: null, role: "", category: "29er" },
+      { date: "2024", regatta: "SDYC Junior Invitational Regatta, Hamlin #1", division: "", finish: 4, fleetSize: 13, role: "", category: "29er" },
+      { date: "2024", regatta: "SDAYC Double Handed + O'Pen Skiff Luff In #3", division: "", finish: 3, fleetSize: null, role: "", category: "29er" },
+      { date: "2024", regatta: "29er National Championship", division: "", finish: 6, fleetSize: 16, role: "", category: "29er" },
+      { date: "2024", regatta: "Olympic Classes Regatta", division: "", finish: 6, fleetSize: 14, role: "", category: "29er" },
+      { date: "2024", regatta: "U.S. Youth Championship", division: "", finish: 6, fleetSize: 20, role: "", category: "29er" },
+      { date: "2024", regatta: "Santa Barbara Spring Dinghy Regatta, Hamlin Series 4", division: "", finish: 4, fleetSize: 10, role: "", category: "29er" },
+      { date: "2024", regatta: "SCYA E.E. Manning Regatta", division: "", finish: 5, fleetSize: 8, role: "", category: "29er" },
+      { date: "2024", regatta: "Midwinters West", division: "", finish: 21, fleetSize: 27, role: "", category: "29er" },
+      { date: "2023", regatta: "SDAYC Doublehanded Luff In", division: "", finish: 1, fleetSize: 5, role: "", category: "29er" },
+      { date: "2023", regatta: "Hamlin #2", division: "", finish: 8, fleetSize: null, role: "", category: "29er" },
+      { date: "2023", regatta: "Hamlin #1", division: "", finish: 9, fleetSize: null, role: "", category: "29er" },
+      // C420
+      { date: "2025", regatta: "SCYYRA Perry Series #4", division: "", finish: 20, fleetSize: null, role: "", category: "C420" },
+      { date: "2024", regatta: "SCYYRA Perry Series #1", division: "", finish: 18, fleetSize: null, role: "", category: "C420" },
+      { date: "2023", regatta: "Perry Series #1", division: "", finish: 29, fleetSize: null, role: "", category: "C420" },
+      // CFJ
+      { date: "2025", regatta: "CFJ Nationals", division: "", finish: 3, fleetSize: null, role: "", category: "CFJ" },
+      { date: "2024", regatta: "CFJ Nationals", division: "", finish: 13, fleetSize: null, role: "", category: "CFJ" },
+      // High School
+      { date: "2026", regatta: "Harold Adams Team Race Regatta", division: "", finish: 4, fleetSize: null, role: "", category: "High School", finishNote: "Gold" },
+      { date: "2025", regatta: "PCISA Gold PCCs", division: "", finish: 9, fleetSize: null, role: "", category: "High School" },
+      { date: "2025", regatta: "PCISA Team Race PCCs - Baker Elims", division: "", finish: 3, fleetSize: null, role: "", category: "High School" },
+      { date: "2025", regatta: "PCISA Gaucho Regatta", division: "Gold B", finish: 11, fleetSize: null, role: "", category: "High School" },
+      { date: "2025", regatta: "PCISA Golden Bear Regatta", division: "Gold B", finish: 9, fleetSize: null, role: "", category: "High School" },
+      { date: "2025", regatta: "PCISA Rose Bowl Regatta", division: "Gold B", finish: 12, fleetSize: null, role: "", category: "High School" },
+      { date: "2024", regatta: "PCISA Anteater Regatta", division: "Gold B", finish: 6, fleetSize: null, role: "", category: "High School" },
+      { date: "2024", regatta: "PCISA Sea Otter Regatta", division: "Gold A", finish: 15, fleetSize: 32, role: "", category: "High School" },
+      // J22 (Keelboat)
+      { date: "2025", regatta: "Area J US Sailing Sears Triplehanded Qualifier", division: "", finish: 1, fleetSize: null, role: "Skipper", category: "J22" },
+      { date: "2024", regatta: "PCISA Keelboat Qualifier", division: "", finish: 7, fleetSize: null, role: "Crew", category: "J22" },
+      { date: "2024", regatta: "Area J US Sailing Sears Triplehanded Qualifier", division: "", finish: 4, fleetSize: null, role: "Crew", category: "J22" },
+      // Sabot
+      { date: "2024", regatta: "INSA Junior Sabot Nationals", division: "Gold Fleet", finish: 2, fleetSize: null, role: "", category: "Sabot" },
+      { date: "2024", regatta: "SCYYRA Dick Sweet Series", division: "", finish: 2, fleetSize: null, role: "", category: "Sabot" },
+      { date: "2024", regatta: "SCYYRA North Series", division: "", finish: 2, fleetSize: null, role: "", category: "Sabot" },
+      { date: "2024", regatta: "Spring Gold Cup", division: "A Fleet", finish: 11, fleetSize: 23, role: "", category: "Sabot" },
+      { date: "2024", regatta: "Junior Invitational", division: "A Fleet", finish: 4, fleetSize: 19, role: "", category: "Sabot" },
+      { date: "2023", regatta: "MBYC Junior Commodore's Regatta", division: "A Fleet", finish: 2, fleetSize: 14, role: "", category: "Sabot" },
+      { date: "2023", regatta: "SDAYC Junior Invitational Regatta", division: "A Fleet", finish: 2, fleetSize: 10, role: "", category: "Sabot" },
+      { date: "2023", regatta: "Fall Gold Cup", division: "A Fleet", finish: 3, fleetSize: 15, role: "", category: "Sabot" },
+      { date: "2023", regatta: "SCYYRA Dick Sweet Team Racing Series", division: "", finish: 4, fleetSize: 10, role: "", category: "Sabot" },
+      { date: "2023", regatta: "Dutch Shoe Marathon", division: "A Fleet", finish: 3, fleetSize: 17, role: "", category: "Sabot" },
     ];
 
     // ── Upcoming Schedule ────────────────────────────────────────────────
@@ -1789,8 +1837,8 @@
       `;
     }
 
-    const RESULTS_CATEGORIES = ["High School", "29er", "420", "Keelboat", "Sabot", "Clinics", "Awards"];
-    let activeResultsCategory = "High School";
+    const RESULTS_CATEGORIES = ["29er", "High School", "J22", "C420", "CFJ", "Sabot", "Clinics", "Awards"];
+    let activeResultsCategory = "29er";
 
     function renderResults() {
       const el = document.getElementById('results-content');
@@ -1883,24 +1931,31 @@
 
         const tableRows = filtered.map(function(r) {
           const pc = podiumClass(r.finish);
-          const finishHTML = finishBadge(r.finish);
+          var finishText = finishBadge(r.finish);
+          if (r.finishNote) finishText += ' ' + r.finishNote;
+          if (r.role) finishText += ' (' + r.role + ')';
+          var fleetText = r.fleetSize ? r.fleetSize : '';
           return '<tr class="' + pc + '">'
             + '<td>' + r.date + '</td>'
             + '<td>' + r.regatta + '</td>'
-            + '<td>' + r.division + '</td>'
-            + '<td>' + r.role + '</td>'
-            + '<td>' + finishHTML + '</td>'
-            + '<td>' + r.fleetSize + ' boats</td>'
+            + '<td>' + (r.division || '') + '</td>'
+            + '<td>' + finishText + '</td>'
+            + '<td>' + fleetText + '</td>'
             + '</tr>';
         }).join('');
 
         const cards = filtered.map(function(r) {
           const pc = podiumClass(r.finish);
-          const finishHTML = finishBadge(r.finish);
+          var finishText = finishBadge(r.finish);
+          if (r.finishNote) finishText += ' ' + r.finishNote;
+          if (r.role) finishText += ' (' + r.role + ')';
+          var meta = r.date;
+          if (r.division) meta += ' &middot; ' + r.division;
+          var fleetText = r.fleetSize ? ' of ' + r.fleetSize + ' boats' : '';
           return '<div class="result-card ' + pc + '">'
             + '<div class="result-card-name">' + r.regatta + '</div>'
-            + '<div class="result-card-meta">' + r.date + ' &middot; ' + r.division + ' &middot; ' + r.role + '</div>'
-            + '<div class="result-card-finish">' + finishHTML + ' of ' + r.fleetSize + ' boats</div>'
+            + '<div class="result-card-meta">' + meta + '</div>'
+            + '<div class="result-card-finish">' + finishText + fleetText + '</div>'
             + '</div>';
         }).join('');
 
@@ -1919,7 +1974,6 @@
                 <th>Date</th>
                 <th>Regatta</th>
                 <th>Division</th>
-                <th>Role</th>
                 <th>Finish</th>
                 <th>Fleet</th>
               </tr>
