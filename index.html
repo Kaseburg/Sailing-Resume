@@ -138,9 +138,8 @@
     #academics { background: var(--color-surface); }
     #athletics-activities { background: var(--color-bg); }
     #results { background: var(--color-surface); }
-    #awards { background: var(--color-bg); }
-    #video { background: var(--color-surface); }
-    #schedule { background: var(--color-bg); }
+    #video { background: var(--color-bg); }
+    #schedule { background: var(--color-surface); }
     #contact {
       background: var(--color-primary);
       color: #fff;
@@ -530,49 +529,6 @@
       font-size: .95rem;
       color: var(--color-text-muted);
       line-height: 1.5;
-    }
-
-    /* ================================================================
-       AWARDS & RECOGNITION SECTION
-       ================================================================ */
-    .awards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.25rem;
-    }
-    .awards-year-card {
-      background: var(--color-surface);
-      border-radius: 12px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.06);
-      padding: 1.5rem;
-    }
-    .awards-year-heading {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--color-primary);
-      margin-bottom: .75rem;
-      border-bottom: 2px solid var(--color-accent);
-      padding-bottom: .4rem;
-    }
-    .awards-year-card ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .awards-year-card li {
-      font-size: .95rem;
-      color: var(--color-text-muted);
-      line-height: 1.6;
-      padding: .25rem 0;
-      padding-left: 1rem;
-      position: relative;
-    }
-    .awards-year-card li::before {
-      content: "\2022";
-      color: var(--color-accent);
-      font-weight: 700;
-      position: absolute;
-      left: 0;
     }
 
     /* ================================================================
@@ -1347,7 +1303,6 @@
       <li><a href="#sailing-experience">Sailing</a></li>
       <li><a href="#academics">Academics</a></li>
       <li><a href="#results">Results</a></li>
-      <li><a href="#awards">Awards</a></li>
       <li><a href="#video">Photos</a></li>
       <li><a href="#schedule">Schedule</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -1414,15 +1369,6 @@
          ============================================================ -->
     <section id="results" aria-label="Sailing results">
       <div class="container animate-on-scroll" id="results-content">
-        <!-- Populated by JS -->
-      </div>
-    </section>
-
-    <!-- ============================================================
-         AWARDS & RECOGNITION SECTION
-         ============================================================ -->
-    <section id="awards" aria-label="Awards and recognition">
-      <div class="container animate-on-scroll" id="awards-content">
         <!-- Populated by JS -->
       </div>
     </section>
@@ -1639,7 +1585,6 @@
       renderAcademics();
       renderAthletics();
       renderResults();
-      renderAwards();
       renderSlideshow();
       renderSchedule();
       renderContact();
@@ -1844,7 +1789,7 @@
       `;
     }
 
-    const RESULTS_CATEGORIES = ["High School", "29er", "420", "Keelboat", "Sabot", "Clinics"];
+    const RESULTS_CATEGORIES = ["High School", "29er", "420", "Keelboat", "Sabot", "Clinics", "Awards"];
     let activeResultsCategory = "High School";
 
     function renderResults() {
@@ -1885,6 +1830,45 @@
                 <th>Clinic</th>
                 <th>Boat</th>
                 <th>Coaches</th>
+              </tr>
+            </thead>
+            <tbody>${tableRows}</tbody>
+          </table>`;
+        cardsHTML = cards;
+
+      } else if (activeResultsCategory === 'Awards') {
+        // Awards tab — Year and Award columns
+        // Group by year
+        var byYear = {};
+        AWARDS.forEach(function(a) {
+          if (!byYear[a.year]) byYear[a.year] = [];
+          byYear[a.year].push(a.award);
+        });
+        var years = Object.keys(byYear).sort(function(a, b) { return b - a; });
+
+        var tableRows = '';
+        years.forEach(function(year) {
+          byYear[year].forEach(function(award, i) {
+            tableRows += '<tr>'
+              + '<td>' + (i === 0 ? year : '') + '</td>'
+              + '<td>' + award + '</td>'
+              + '</tr>';
+          });
+        });
+
+        var cards = AWARDS.map(function(a) {
+          return '<div class="result-card">'
+            + '<div class="result-card-name">' + a.award + '</div>'
+            + '<div class="result-card-meta">' + a.year + '</div>'
+            + '</div>';
+        }).join('');
+
+        tableHTML = `
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Award</th>
               </tr>
             </thead>
             <tbody>${tableRows}</tbody>
@@ -1971,33 +1955,6 @@
       if (finish === 2) return '<span class="podium-badge podium-badge-silver">' + o + '</span>';
       if (finish === 3) return '<span class="podium-badge podium-badge-bronze">' + o + '</span>';
       return o;
-    }
-
-    function renderAwards() {
-      const el = document.getElementById('awards-content');
-
-      // Group awards by year
-      const byYear = {};
-      AWARDS.forEach(function(a) {
-        if (!byYear[a.year]) byYear[a.year] = [];
-        byYear[a.year].push(a.award);
-      });
-
-      // Sort years descending
-      const years = Object.keys(byYear).sort(function(a, b) { return b - a; });
-
-      const cards = years.map(function(year) {
-        const items = byYear[year].map(function(award) {
-          return '<li>' + award + '</li>';
-        }).join('');
-        return '<div class="awards-year-card">'
-          + '<div class="awards-year-heading">' + year + '</div>'
-          + '<ul>' + items + '</ul>'
-          + '</div>';
-      }).join('');
-
-      el.innerHTML = '<h2 class="section-title">Awards &amp; Recognition</h2>'
-        + '<div class="awards-grid">' + cards + '</div>';
     }
 
     function renderSlideshow() {
