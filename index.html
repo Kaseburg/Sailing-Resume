@@ -138,8 +138,9 @@
     #academics { background: var(--color-surface); }
     #athletics-activities { background: var(--color-bg); }
     #results { background: var(--color-surface); }
-    #video { background: var(--color-bg); }
-    #schedule { background: var(--color-surface); }
+    #awards { background: var(--color-bg); }
+    #video { background: var(--color-surface); }
+    #schedule { background: var(--color-bg); }
     #contact {
       background: var(--color-primary);
       color: #fff;
@@ -529,6 +530,49 @@
       font-size: .95rem;
       color: var(--color-text-muted);
       line-height: 1.5;
+    }
+
+    /* ================================================================
+       AWARDS & RECOGNITION SECTION
+       ================================================================ */
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .awards-year-card {
+      background: var(--color-surface);
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      padding: 1.5rem;
+    }
+    .awards-year-heading {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: .75rem;
+      border-bottom: 2px solid var(--color-accent);
+      padding-bottom: .4rem;
+    }
+    .awards-year-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .awards-year-card li {
+      font-size: .95rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      padding: .25rem 0;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .awards-year-card li::before {
+      content: "\2022";
+      color: var(--color-accent);
+      font-weight: 700;
+      position: absolute;
+      left: 0;
     }
 
     /* ================================================================
@@ -1303,6 +1347,7 @@
       <li><a href="#sailing-experience">Sailing</a></li>
       <li><a href="#academics">Academics</a></li>
       <li><a href="#results">Results</a></li>
+      <li><a href="#awards">Awards</a></li>
       <li><a href="#video">Photos</a></li>
       <li><a href="#schedule">Schedule</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -1374,7 +1419,16 @@
     </section>
 
     <!-- ============================================================
-         VIDEO SECTION
+         AWARDS & RECOGNITION SECTION
+         ============================================================ -->
+    <section id="awards" aria-label="Awards and recognition">
+      <div class="container animate-on-scroll" id="awards-content">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PHOTOS SECTION
          ============================================================ -->
     <section id="video" aria-label="Photos">
       <div class="container animate-on-scroll" id="slideshow-content">
@@ -1532,6 +1586,36 @@
       { date: "May 16–17, 2026", event: "ISSA Mallory National Championship", location: "Annapolis, MD", role: "Skipper — A Division" },
     ];
 
+    // ── Awards & Recognition ─────────────────────────────────────────────
+    const AWARDS = [
+      { year: 2026, award: "US Sailing Youth National Team" },
+      { year: 2026, award: "SCYYRA RACE Team" },
+      { year: 2026, award: "Cathedral Catholic Varsity Sailing Team Captain" },
+      { year: 2025, award: "US Sailing Youth National Team" },
+      { year: 2025, award: "Teammate of the Year — Cathedral Catholic Varsity Sailing Team" },
+      { year: 2024, award: "Best Under 15 at National Travel Regatta — San Diego Yacht Club" },
+      { year: 2024, award: "MBYC Mildred Smith Spring Series Award" },
+      { year: 2024, award: "MBYC 29er Fleet Champion" },
+      { year: 2024, award: "MBYC Sabot Fleet Champion" },
+      { year: 2024, award: "MBYC Shakey Legged Players Summer Series Champion" },
+    ];
+
+
+    // ── Clinics ──────────────────────────────────────────────────────────
+    const CLINICS = [
+      { year: "2026", clinic: "CISA Advanced Racing Clinic", boat: "29er", coaches: "Phil Mueller, Paris Henken, Antoine Screve, Caroline Atwood" },
+      { year: "2025", clinic: "SCYYRA Winter Advanced Training Clinic", boat: "29er", coaches: "" },
+      { year: "2025", clinic: "US Sailing Youth National Team Training Camp, Miami, FL", boat: "29er", coaches: "Phil Mueller, Stephanie Roble, Caroline Atwood" },
+      { year: "2025", clinic: "US Sailing Youth National Team Training Camp, San Francisco, CA", boat: "29er", coaches: "Phil Mueller, Andrew Brown" },
+      { year: "2025", clinic: "SDYC High Performance Sailing Clinic", boat: "29er", coaches: "Giselle Nyenhuis, Ian Nyenhuis, B. Lindsey" },
+      { year: "2025", clinic: "CISA Advanced Racing Clinic", boat: "29er", coaches: "Andrew Brown, Tomas Di Luciano, Louisa Nordstrom" },
+      { year: "2025", clinic: "SDYC High Performance Youth Sailing Clinic", boat: "29er", coaches: "Phil Mueller, Antoine Screve, Ian Nyenhuis" },
+      { year: "2024", clinic: "SDYC High Performance Youth Sailing Clinic", boat: "29er", coaches: "Paris Henken, Sterling Henken, Noah Nyenhuis, B. Lindsay" },
+      { year: "2024", clinic: "US Sailing Youth Champs Clinic", boat: "29er", coaches: "Phil Mueller" },
+      { year: "2024", clinic: "SCYYRA Winter Advanced Training Clinic", boat: "29er", coaches: "" },
+      { year: "2024", clinic: "SDYC High Performance Youth Sailing", boat: "29er", coaches: "" },
+    ];
+
 
     // ╔════════════════════════════════════════════════════════════╗
     // ║  RENDERING — Builds all HTML from the config above        ║
@@ -1555,6 +1639,7 @@
       renderAcademics();
       renderAthletics();
       renderResults();
+      renderAwards();
       renderSlideshow();
       renderSchedule();
       renderContact();
@@ -1759,7 +1844,7 @@
       `;
     }
 
-    const RESULTS_CATEGORIES = ["High School", "29er", "420", "Keelboat", "Sabot"];
+    const RESULTS_CATEGORIES = ["High School", "29er", "420", "Keelboat", "Sabot", "Clinics"];
     let activeResultsCategory = "High School";
 
     function renderResults() {
@@ -1771,51 +1856,79 @@
         return '<button class="results-tab' + activeClass + '" data-category="' + cat + '">' + cat + '</button>';
       }).join('');
 
-      // Filter results by active category
-      const filtered = RESULTS.filter(function(r) {
-        return r.category === activeResultsCategory;
-      });
+      var tableHTML, cardsHTML, emptyHTML = '', footerHTML = '';
 
-      // Build table rows
-      const tableRows = filtered.map(function(r) {
-        const pc = podiumClass(r.finish);
-        const finishHTML = finishBadge(r.finish);
-        return '<tr class="' + pc + '">'
-          + '<td>' + r.date + '</td>'
-          + '<td>' + r.regatta + '</td>'
-          + '<td>' + r.division + '</td>'
-          + '<td>' + r.role + '</td>'
-          + '<td>' + finishHTML + '</td>'
-          + '<td>' + r.fleetSize + ' boats</td>'
-          + '</tr>';
-      }).join('');
+      if (activeResultsCategory === 'Clinics') {
+        // Clinics tab — different columns
+        const tableRows = CLINICS.map(function(c) {
+          return '<tr>'
+            + '<td>' + c.year + '</td>'
+            + '<td>' + c.clinic + '</td>'
+            + '<td>' + c.boat + '</td>'
+            + '<td>' + (c.coaches || '—') + '</td>'
+            + '</tr>';
+        }).join('');
 
-      // Build mobile cards
-      const cards = filtered.map(function(r) {
-        const pc = podiumClass(r.finish);
-        const finishHTML = finishBadge(r.finish);
-        return '<div class="result-card ' + pc + '">'
-          + '<div class="result-card-name">' + r.regatta + '</div>'
-          + '<div class="result-card-meta">' + r.date + ' &middot; ' + r.division + ' &middot; ' + r.role + '</div>'
-          + '<div class="result-card-finish">' + finishHTML + ' of ' + r.fleetSize + ' boats</div>'
-          + '</div>';
-      }).join('');
+        const cards = CLINICS.map(function(c) {
+          return '<div class="result-card">'
+            + '<div class="result-card-name">' + c.clinic + '</div>'
+            + '<div class="result-card-meta">' + c.year + ' &middot; ' + c.boat + '</div>'
+            + (c.coaches ? '<div class="result-card-finish">Coaches: ' + c.coaches + '</div>' : '')
+            + '</div>';
+        }).join('');
 
-      // Empty state
-      const emptyHTML = filtered.length === 0
-        ? '<p style="text-align:center;color:#888;padding:2rem 0;">No results yet for ' + activeResultsCategory + '.</p>'
-        : '';
+        tableHTML = `
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Clinic</th>
+                <th>Boat</th>
+                <th>Coaches</th>
+              </tr>
+            </thead>
+            <tbody>${tableRows}</tbody>
+          </table>`;
+        cardsHTML = cards;
 
-      // Techscore link
-      let footerHTML = '';
-      if (ATHLETE.techscoreURL) {
-        footerHTML = '<div class="results-footer"><a href="' + ATHLETE.techscoreURL + '" target="_blank" rel="noopener">View full results on Techscore</a></div>';
-      }
+      } else {
+        // Standard results tab
+        const filtered = RESULTS.filter(function(r) {
+          return r.category === activeResultsCategory;
+        });
 
-      el.innerHTML = `
-        <h2 class="section-title">Sailing Results</h2>
-        <div class="results-tabs">${tabs}</div>
-        <div class="results-table-wrap">
+        const tableRows = filtered.map(function(r) {
+          const pc = podiumClass(r.finish);
+          const finishHTML = finishBadge(r.finish);
+          return '<tr class="' + pc + '">'
+            + '<td>' + r.date + '</td>'
+            + '<td>' + r.regatta + '</td>'
+            + '<td>' + r.division + '</td>'
+            + '<td>' + r.role + '</td>'
+            + '<td>' + finishHTML + '</td>'
+            + '<td>' + r.fleetSize + ' boats</td>'
+            + '</tr>';
+        }).join('');
+
+        const cards = filtered.map(function(r) {
+          const pc = podiumClass(r.finish);
+          const finishHTML = finishBadge(r.finish);
+          return '<div class="result-card ' + pc + '">'
+            + '<div class="result-card-name">' + r.regatta + '</div>'
+            + '<div class="result-card-meta">' + r.date + ' &middot; ' + r.division + ' &middot; ' + r.role + '</div>'
+            + '<div class="result-card-finish">' + finishHTML + ' of ' + r.fleetSize + ' boats</div>'
+            + '</div>';
+        }).join('');
+
+        emptyHTML = filtered.length === 0
+          ? '<p style="text-align:center;color:#888;padding:2rem 0;">No results yet for ' + activeResultsCategory + '.</p>'
+          : '';
+
+        if (ATHLETE.techscoreURL) {
+          footerHTML = '<div class="results-footer"><a href="' + ATHLETE.techscoreURL + '" target="_blank" rel="noopener">View full results on Techscore</a></div>';
+        }
+
+        tableHTML = `
           <table class="results-table">
             <thead>
               <tr>
@@ -1828,9 +1941,17 @@
               </tr>
             </thead>
             <tbody>${tableRows}</tbody>
-          </table>
+          </table>`;
+        cardsHTML = cards;
+      }
+
+      el.innerHTML = `
+        <h2 class="section-title">Sailing Results</h2>
+        <div class="results-tabs">${tabs}</div>
+        <div class="results-table-wrap">
+          ${tableHTML}
         </div>
-        <div class="results-cards">${cards}</div>
+        <div class="results-cards">${cardsHTML}</div>
         ${emptyHTML}
         ${footerHTML}
       `;
@@ -1850,6 +1971,33 @@
       if (finish === 2) return '<span class="podium-badge podium-badge-silver">' + o + '</span>';
       if (finish === 3) return '<span class="podium-badge podium-badge-bronze">' + o + '</span>';
       return o;
+    }
+
+    function renderAwards() {
+      const el = document.getElementById('awards-content');
+
+      // Group awards by year
+      const byYear = {};
+      AWARDS.forEach(function(a) {
+        if (!byYear[a.year]) byYear[a.year] = [];
+        byYear[a.year].push(a.award);
+      });
+
+      // Sort years descending
+      const years = Object.keys(byYear).sort(function(a, b) { return b - a; });
+
+      const cards = years.map(function(year) {
+        const items = byYear[year].map(function(award) {
+          return '<li>' + award + '</li>';
+        }).join('');
+        return '<div class="awards-year-card">'
+          + '<div class="awards-year-heading">' + year + '</div>'
+          + '<ul>' + items + '</ul>'
+          + '</div>';
+      }).join('');
+
+      el.innerHTML = '<h2 class="section-title">Awards &amp; Recognition</h2>'
+        + '<div class="awards-grid">' + cards + '</div>';
     }
 
     function renderSlideshow() {
