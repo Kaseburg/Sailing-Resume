@@ -370,8 +370,8 @@
       padding: 0 1rem;
     }
     .boat-classes-grid img {
-      height: 60px;
-      max-height: 9vw;
+      height: 51px;
+      max-height: 7.65vw;
       width: auto;
       object-fit: contain;
       flex-shrink: 1;
@@ -457,15 +457,16 @@
        ACADEMICS SECTION
        ================================================================ */
     .academics-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: .75rem;
     }
     .acad-card {
       background: var(--color-surface);
       border-radius: 12px;
       box-shadow: 0 1px 4px rgba(0,0,0,.06);
-      padding: 1.25rem;
+      padding: 1rem 1.25rem;
       text-align: center;
     }
     .acad-card-value {
@@ -1081,13 +1082,12 @@
         padding: 1.75rem;
       }
 
-      /* ── Academics — tablet: 3 columns ── */
+      /* ── Academics — tablet ── */
       .academics-grid {
-        grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
       }
       .acad-card {
-        padding: 1.5rem;
+        padding: 1rem 1.5rem;
       }
       .acad-card-value {
         font-size: 1.5rem;
@@ -1445,7 +1445,7 @@
       school: "Cathedral Catholic",
       city: "San Diego",
       state: "CA",
-      height: "5'10\"",
+      height: "5'11\"",
       weight: "140 lbs",
 
       // ── Academics ──────────────────────────────────────────
@@ -2070,27 +2070,29 @@
     }
 
     const COACHES = [
-      // Add coach references here: { name: "...", program: "...", phone: "...", email: "..." }
+      { name: "", program: "", phone: "", email: "" },
+      { name: "", program: "", phone: "", email: "" },
+      { name: "", program: "", phone: "", email: "" },
     ];
 
     function renderCoaches() {
       const el = document.getElementById('coaches-content');
-      if (!COACHES.length) {
-        el.innerHTML = '<h2 class="section-title">Coaches &amp; References</h2><p style="color:var(--color-text-muted);font-style:italic;">Coming soon.</p>';
-        return;
-      }
 
       const cards = COACHES.map(function(c) {
         return '<div class="contact-card" style="background:var(--color-surface);color:var(--color-text);">'
-          + '<div class="contact-card-name">' + c.name + '</div>'
-          + '<div class="contact-card-team">' + c.program + '</div>'
+          + '<div class="contact-card-heading" style="color:var(--color-text-muted);">Coach Name</div>'
+          + '<div class="contact-card-name">' + (c.name || '&nbsp;') + '</div>'
+          + '<div class="contact-card-line">'
+          + '<span class="contact-card-line-label" style="color:var(--color-text-muted);">Program</span>'
+          + '<span style="color:var(--color-text);">' + (c.program || '&nbsp;') + '</span>'
+          + '</div>'
           + '<div class="contact-card-line">'
           + '<span class="contact-card-line-label" style="color:var(--color-text-muted);">Phone</span>'
-          + '<a href="tel:' + c.phone + '" style="color:var(--color-primary);">' + c.phone + '</a>'
+          + (c.phone ? '<a href="tel:' + c.phone + '" style="color:var(--color-primary);">' + c.phone + '</a>' : '<span>&nbsp;</span>')
           + '</div>'
           + '<div class="contact-card-line">'
           + '<span class="contact-card-line-label" style="color:var(--color-text-muted);">Email</span>'
-          + '<a href="mailto:' + c.email + '" style="color:var(--color-primary);">' + c.email + '</a>'
+          + (c.email ? '<a href="mailto:' + c.email + '" style="color:var(--color-primary);">' + c.email + '</a>' : '<span>&nbsp;</span>')
           + '</div>'
           + '</div>';
       }).join('');
