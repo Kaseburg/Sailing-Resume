@@ -136,10 +136,11 @@
     #about { background: var(--color-surface); }
     #sailing-experience { background: var(--color-bg); }
     #academics { background: var(--color-surface); }
+    #results { background: var(--color-bg); }
+    #video { background: var(--color-surface); }
     #athletics-activities { background: var(--color-bg); }
-    #results { background: var(--color-surface); }
-    #video { background: var(--color-bg); }
-    #schedule { background: var(--color-surface); }
+    #coaches { background: var(--color-surface); }
+    #schedule { background: var(--color-bg); }
     #contact {
       background: var(--color-primary);
       color: #fff;
@@ -1365,15 +1366,6 @@
     </section>
 
     <!-- ============================================================
-         ATHLETICS & ACTIVITIES SECTION (NEW)
-         ============================================================ -->
-    <section id="athletics-activities" aria-label="Athletics and activities">
-      <div class="container animate-on-scroll" id="athletics-content">
-        <!-- Populated by JS -->
-      </div>
-    </section>
-
-    <!-- ============================================================
          SAILING RESULTS SECTION
          ============================================================ -->
     <section id="results" aria-label="Sailing results">
@@ -1387,6 +1379,24 @@
          ============================================================ -->
     <section id="video" aria-label="Photos">
       <div class="container animate-on-scroll" id="slideshow-content">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ============================================================
+         EXTRACURRICULARS & LEADERSHIP SECTION
+         ============================================================ -->
+    <section id="athletics-activities" aria-label="Extracurriculars and leadership">
+      <div class="container animate-on-scroll" id="athletics-content">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COACHES & REFERENCES SECTION
+         ============================================================ -->
+    <section id="coaches" aria-label="Coaches and references">
+      <div class="container animate-on-scroll" id="coaches-content">
         <!-- Populated by JS -->
       </div>
     </section>
@@ -1439,14 +1449,12 @@
       weight: "140 lbs",
 
       // ── Academics ──────────────────────────────────────────
-      gpaUnweighted: "4.0",
-      gpaWeighted: "4.7",
-      sat: "[XXXX]",
-      act: "[XX]",
-      intendedMajor: "[Major]",
-      classRank: "[X of XXX]",
-      apCourses: ["[AP Course 1]", "[AP Course 2]", "[AP Course 3]"],
-      honorsCourses: ["[Honors Course 1]", "[Honors Course 2]"],
+      gpaUnweighted: "4.00",
+      gpaWeighted: "4.52",
+      sat: "Pending",
+      intendedMajor: "Biology/Engineering",
+      apCourses: ["AP Pre-Calculus", "AP World History"],
+      honorsCourses: ["English 1 Honors", "Algebra 2 Honors", "Biology Honors", "English 2 Honors", "Spanish 3 Honors", "Chemistry Honors"],
 
       // ── Sailing ────────────────────────────────────────────
       yearsRacing: "[X]",
@@ -1640,9 +1648,10 @@
       renderAbout();
       renderSailingExperience();
       renderAcademics();
-      renderAthletics();
       renderResults();
       renderSlideshow();
+      renderAthletics();
+      renderCoaches();
       renderSchedule();
       renderContact();
       renderFooter();
@@ -1787,16 +1796,8 @@
             <div class="acad-card-label">SAT Score</div>
           </div>
           <div class="acad-card">
-            <div class="acad-card-value">${ATHLETE.act}</div>
-            <div class="acad-card-label">ACT Score</div>
-          </div>
-          <div class="acad-card">
             <div class="acad-card-value">${ATHLETE.intendedMajor}</div>
             <div class="acad-card-label">Intended Major</div>
-          </div>
-          <div class="acad-card">
-            <div class="acad-card-value">${ATHLETE.classRank}</div>
-            <div class="acad-card-label">Class Rank</div>
           </div>
         </div>
         <h3 class="courses-heading">AP &amp; Honors Courses</h3>
@@ -1807,15 +1808,8 @@
     function renderAthletics() {
       const el = document.getElementById('athletics-content');
 
-      // Build rows, skipping empty/placeholder-only arrays
       let rows = '';
 
-      if (ATHLETE.otherSports.length > 0) {
-        rows += '<div class="athletics-row">'
-          + '<div class="athletics-label">Other Varsity Sports</div>'
-          + '<div class="athletics-value">' + ATHLETE.otherSports.join(', ') + '</div>'
-          + '</div>';
-      }
       if (ATHLETE.leadershipRoles.length > 0) {
         rows += '<div class="athletics-row">'
           + '<div class="athletics-label">Leadership Roles</div>'
@@ -1830,7 +1824,7 @@
       }
 
       el.innerHTML = `
-        <h2 class="section-title">Athletics &amp; Activities</h2>
+        <h2 class="section-title">Extracurriculars &amp; Leadership</h2>
         <div class="athletics-card">${rows}</div>
       `;
     }
@@ -2075,6 +2069,36 @@
       startAuto();
     }
 
+    const COACHES = [
+      // Add coach references here: { name: "...", program: "...", phone: "...", email: "..." }
+    ];
+
+    function renderCoaches() {
+      const el = document.getElementById('coaches-content');
+      if (!COACHES.length) {
+        el.innerHTML = '<h2 class="section-title">Coaches &amp; References</h2><p style="color:var(--color-text-muted);font-style:italic;">Coming soon.</p>';
+        return;
+      }
+
+      const cards = COACHES.map(function(c) {
+        return '<div class="contact-card" style="background:var(--color-surface);color:var(--color-text);">'
+          + '<div class="contact-card-name">' + c.name + '</div>'
+          + '<div class="contact-card-team">' + c.program + '</div>'
+          + '<div class="contact-card-line">'
+          + '<span class="contact-card-line-label" style="color:var(--color-text-muted);">Phone</span>'
+          + '<a href="tel:' + c.phone + '" style="color:var(--color-primary);">' + c.phone + '</a>'
+          + '</div>'
+          + '<div class="contact-card-line">'
+          + '<span class="contact-card-line-label" style="color:var(--color-text-muted);">Email</span>'
+          + '<a href="mailto:' + c.email + '" style="color:var(--color-primary);">' + c.email + '</a>'
+          + '</div>'
+          + '</div>';
+      }).join('');
+
+      el.innerHTML = '<h2 class="section-title">Coaches &amp; References</h2>'
+        + '<div class="contact-grid">' + cards + '</div>';
+    }
+
     function renderSchedule() {
       const el = document.getElementById('schedule-content');
 
@@ -2138,63 +2162,6 @@
           </div>
         </div>`;
 
-      let coachLetterBtn = ATHLETE.coachLetterURL ? `<a href="${ATHLETE.coachLetterURL}" target="_blank" rel="noopener" class="contact-card-rec-btn">Letter of Recommendation</a>` : '';
-      let coachCard = `
-        <div class="contact-card" role="group" aria-label="Coach contact">
-          <div class="contact-card-heading">Coach</div>
-          <div class="contact-card-name">${ATHLETE.coachName}</div>
-          <div class="contact-card-team">${ATHLETE.coachTeam}</div>
-          <div class="contact-card-line">
-            <span class="contact-card-line-label">Phone</span>
-            <a href="tel:${ATHLETE.coachPhone}" aria-label="Call ${ATHLETE.coachName}">${ATHLETE.coachPhone}</a>
-          </div>
-          <div class="contact-card-line">
-            <span class="contact-card-line-label">Email</span>
-            <a href="mailto:${ATHLETE.coachEmail}" aria-label="Email ${ATHLETE.coachName}">${ATHLETE.coachEmail}</a>
-          </div>
-          ${coachLetterBtn}
-        </div>`;
-
-      let coach2Card = '';
-      if (!isPlaceholder(ATHLETE.coach2Name)) {
-        let coach2LetterBtn = ATHLETE.coach2LetterURL ? `<a href="${ATHLETE.coach2LetterURL}" target="_blank" rel="noopener" class="contact-card-rec-btn">Letter of Recommendation</a>` : '';
-        coach2Card = `
-          <div class="contact-card" role="group" aria-label="Coach 2 contact">
-            <div class="contact-card-heading">Coach</div>
-            <div class="contact-card-name">${ATHLETE.coach2Name}</div>
-            <div class="contact-card-team">${ATHLETE.coach2Team}</div>
-            <div class="contact-card-line">
-              <span class="contact-card-line-label">Phone</span>
-              <a href="tel:${ATHLETE.coach2Phone}" aria-label="Call ${ATHLETE.coach2Name}">${ATHLETE.coach2Phone}</a>
-            </div>
-            <div class="contact-card-line">
-              <span class="contact-card-line-label">Email</span>
-              <a href="mailto:${ATHLETE.coach2Email}" aria-label="Email ${ATHLETE.coach2Name}">${ATHLETE.coach2Email}</a>
-            </div>
-            ${coach2LetterBtn}
-          </div>`;
-      }
-
-      let coach3Card = '';
-      if (!isPlaceholder(ATHLETE.coach3Name)) {
-        let coach3LetterBtn = ATHLETE.coach3LetterURL ? `<a href="${ATHLETE.coach3LetterURL}" target="_blank" rel="noopener" class="contact-card-rec-btn">Letter of Recommendation</a>` : '';
-        coach3Card = `
-          <div class="contact-card" role="group" aria-label="Coach 3 contact">
-            <div class="contact-card-heading">Coach</div>
-            <div class="contact-card-name">${ATHLETE.coach3Name}</div>
-            <div class="contact-card-team">${ATHLETE.coach3Team}</div>
-            <div class="contact-card-line">
-              <span class="contact-card-line-label">Phone</span>
-              <a href="tel:${ATHLETE.coach3Phone}" aria-label="Call ${ATHLETE.coach3Name}">${ATHLETE.coach3Phone}</a>
-            </div>
-            <div class="contact-card-line">
-              <span class="contact-card-line-label">Email</span>
-              <a href="mailto:${ATHLETE.coach3Email}" aria-label="Email ${ATHLETE.coach3Name}">${ATHLETE.coach3Email}</a>
-            </div>
-            ${coach3LetterBtn}
-          </div>`;
-      }
-
       let parentCard = '';
       if (showParent) {
         parentCard = `
@@ -2223,8 +2190,7 @@
 
       el.innerHTML = `
         <h2 class="section-title">Contact</h2>
-        <p class="contact-intro">I'd love to learn about your program. Please don't hesitate to reach out.</p>
-        <div class="contact-grid">${athleteCard}${coachCard}${coach2Card}${coach3Card}${parentCard}</div>
+        <div class="contact-grid">${athleteCard}${parentCard}</div>
         ${profileLinks}
       `;
 
