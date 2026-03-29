@@ -1743,11 +1743,6 @@
     function renderSailingExperience() {
       const el = document.getElementById('sailing-experience-content');
 
-      const trainingItems = ATHLETE.trainingAndCoaching
-        .map(function(item) { return '<li>' + item + '</li>'; }).join('');
-      const awardItems = ATHLETE.awards
-        .map(function(item) { return '<li>' + item + '</li>'; }).join('');
-
       el.innerHTML = `
         <h2 class="section-title">Sailing Experience</h2>
         <div class="boat-classes-grid">
@@ -1757,12 +1752,6 @@
           <img src="images/snipe.png" alt="Snipe">
           <img src="images/moth.png" alt="Moth">
         </div>
-
-        <h3 class="sailing-sub-heading">Training &amp; Coaching</h3>
-        <ul class="sailing-list">${trainingItems}</ul>
-
-        <h3 class="sailing-sub-heading">Awards &amp; Recognition</h3>
-        <ul class="sailing-list">${awardItems}</ul>
       `;
     }
 
