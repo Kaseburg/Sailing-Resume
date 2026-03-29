@@ -603,6 +603,15 @@
     .results-table tbody tr.podium-bronze td:first-child { border-left-color: var(--color-bronze); }
     /* Only first td gets the left border */
     .results-table tbody td:not(:first-child) { border-left: none; }
+    .results-table tbody td a,
+    .result-card-name a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+    .results-table tbody td a:hover,
+    .result-card-name a:hover {
+      text-decoration: underline;
+    }
 
     /* ── Podium Badge ── */
     .podium-badge {
@@ -1927,7 +1936,7 @@
           var fleetText = r.fleetSize ? r.fleetSize : '';
           return '<tr class="' + pc + '">'
             + '<td>' + r.date + '</td>'
-            + '<td>' + r.regatta + '</td>'
+            + '<td><a href="https://scores.hssailing.org/sailors/sean-kaseburg/" target="_blank" rel="noopener">' + r.regatta + '</a></td>'
             + (showDivision ? '<td>' + (r.division || '') + '</td>' : '')
             + '<td>' + finishText + '</td>'
             + '<td>' + fleetText + '</td>'
@@ -1943,7 +1952,7 @@
           if (r.division) meta += ' &middot; ' + r.division;
           var fleetText = r.fleetSize ? ' of ' + r.fleetSize + ' boats' : '';
           return '<div class="result-card ' + pc + '">'
-            + '<div class="result-card-name">' + r.regatta + '</div>'
+            + '<div class="result-card-name"><a href="https://scores.hssailing.org/sailors/sean-kaseburg/" target="_blank" rel="noopener">' + r.regatta + '</a></div>'
             + '<div class="result-card-meta">' + meta + '</div>'
             + '<div class="result-card-finish">' + finishText + fleetText + '</div>'
             + '</div>';
