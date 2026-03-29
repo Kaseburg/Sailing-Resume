@@ -1743,11 +1743,6 @@
     function renderSailingExperience() {
       const el = document.getElementById('sailing-experience-content');
 
-      const trainingItems = ATHLETE.trainingAndCoaching
-        .map(function(item) { return '<li>' + item + '</li>'; }).join('');
-      const awardItems = ATHLETE.awards
-        .map(function(item) { return '<li>' + item + '</li>'; }).join('');
-
       el.innerHTML = `
         <h2 class="section-title">Sailing Experience</h2>
         <div class="boat-classes-grid">
@@ -1757,12 +1752,6 @@
           <img src="images/snipe.png" alt="Snipe">
           <img src="images/moth.png" alt="Moth">
         </div>
-
-        <h3 class="sailing-sub-heading">Training &amp; Coaching</h3>
-        <ul class="sailing-list">${trainingItems}</ul>
-
-        <h3 class="sailing-sub-heading">Awards &amp; Recognition</h3>
-        <ul class="sailing-list">${awardItems}</ul>
       `;
     }
 
@@ -1837,8 +1826,8 @@
       `;
     }
 
-    const RESULTS_CATEGORIES = ["29er", "High School", "J22", "C420", "CFJ", "Sabot", "Clinics", "Awards"];
-    let activeResultsCategory = "29er";
+    const RESULTS_CATEGORIES = ["High School", "29er", "J22", "C420", "CFJ", "Sabot", "Clinics", "Awards"];
+    let activeResultsCategory = "High School";
 
     function renderResults() {
       const el = document.getElementById('results-content');
@@ -1928,6 +1917,7 @@
         const filtered = RESULTS.filter(function(r) {
           return r.category === activeResultsCategory;
         });
+        const showDivision = activeResultsCategory === 'High School' || activeResultsCategory === 'Sabot';
 
         const tableRows = filtered.map(function(r) {
           const pc = podiumClass(r.finish);
@@ -1938,7 +1928,7 @@
           return '<tr class="' + pc + '">'
             + '<td>' + r.date + '</td>'
             + '<td>' + r.regatta + '</td>'
-            + '<td>' + (r.division || '') + '</td>'
+            + (showDivision ? '<td>' + (r.division || '') + '</td>' : '')
             + '<td>' + finishText + '</td>'
             + '<td>' + fleetText + '</td>'
             + '</tr>';
@@ -1973,7 +1963,7 @@
               <tr>
                 <th>Date</th>
                 <th>Regatta</th>
-                <th>Division</th>
+                ${showDivision ? '<th>Division</th>' : ''}
                 <th>Finish</th>
                 <th>Fleet</th>
               </tr>
