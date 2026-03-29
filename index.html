@@ -138,8 +138,9 @@
     #academics { background: var(--color-surface); }
     #athletics-activities { background: var(--color-bg); }
     #results { background: var(--color-surface); }
-    #video { background: var(--color-bg); }
-    #schedule { background: var(--color-surface); }
+    #awards { background: var(--color-bg); }
+    #video { background: var(--color-surface); }
+    #schedule { background: var(--color-bg); }
     #contact {
       background: var(--color-primary);
       color: #fff;
@@ -529,6 +530,49 @@
       font-size: .95rem;
       color: var(--color-text-muted);
       line-height: 1.5;
+    }
+
+    /* ================================================================
+       AWARDS & RECOGNITION SECTION
+       ================================================================ */
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .awards-year-card {
+      background: var(--color-surface);
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+      padding: 1.5rem;
+    }
+    .awards-year-heading {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: .75rem;
+      border-bottom: 2px solid var(--color-accent);
+      padding-bottom: .4rem;
+    }
+    .awards-year-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .awards-year-card li {
+      font-size: .95rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      padding: .25rem 0;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .awards-year-card li::before {
+      content: "\2022";
+      color: var(--color-accent);
+      font-weight: 700;
+      position: absolute;
+      left: 0;
     }
 
     /* ================================================================
@@ -1303,6 +1347,7 @@
       <li><a href="#sailing-experience">Sailing</a></li>
       <li><a href="#academics">Academics</a></li>
       <li><a href="#results">Results</a></li>
+      <li><a href="#awards">Awards</a></li>
       <li><a href="#video">Photos</a></li>
       <li><a href="#schedule">Schedule</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -1374,7 +1419,16 @@
     </section>
 
     <!-- ============================================================
-         VIDEO SECTION
+         AWARDS & RECOGNITION SECTION
+         ============================================================ -->
+    <section id="awards" aria-label="Awards and recognition">
+      <div class="container animate-on-scroll" id="awards-content">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PHOTOS SECTION
          ============================================================ -->
     <section id="video" aria-label="Photos">
       <div class="container animate-on-scroll" id="slideshow-content">
@@ -1532,6 +1586,20 @@
       { date: "May 16–17, 2026", event: "ISSA Mallory National Championship", location: "Annapolis, MD", role: "Skipper — A Division" },
     ];
 
+    // ── Awards & Recognition ─────────────────────────────────────────────
+    const AWARDS = [
+      { year: 2026, award: "US Sailing Youth National Team" },
+      { year: 2026, award: "SCYYRA RACE Team" },
+      { year: 2026, award: "Cathedral Catholic Varsity Sailing Team Captain" },
+      { year: 2025, award: "US Sailing Youth National Team" },
+      { year: 2025, award: "Teammate of the Year — Cathedral Catholic Varsity Sailing Team" },
+      { year: 2024, award: "Best Under 15 at National Travel Regatta — San Diego Yacht Club" },
+      { year: 2024, award: "MBYC Mildred Smith Spring Series Award" },
+      { year: 2024, award: "MBYC 29er Fleet Champion" },
+      { year: 2024, award: "MBYC Sabot Fleet Champion" },
+      { year: 2024, award: "MBYC Shakey Legged Players Summer Series Champion" },
+    ];
+
 
     // ╔════════════════════════════════════════════════════════════╗
     // ║  RENDERING — Builds all HTML from the config above        ║
@@ -1555,6 +1623,7 @@
       renderAcademics();
       renderAthletics();
       renderResults();
+      renderAwards();
       renderSlideshow();
       renderSchedule();
       renderContact();
@@ -1850,6 +1919,33 @@
       if (finish === 2) return '<span class="podium-badge podium-badge-silver">' + o + '</span>';
       if (finish === 3) return '<span class="podium-badge podium-badge-bronze">' + o + '</span>';
       return o;
+    }
+
+    function renderAwards() {
+      const el = document.getElementById('awards-content');
+
+      // Group awards by year
+      const byYear = {};
+      AWARDS.forEach(function(a) {
+        if (!byYear[a.year]) byYear[a.year] = [];
+        byYear[a.year].push(a.award);
+      });
+
+      // Sort years descending
+      const years = Object.keys(byYear).sort(function(a, b) { return b - a; });
+
+      const cards = years.map(function(year) {
+        const items = byYear[year].map(function(award) {
+          return '<li>' + award + '</li>';
+        }).join('');
+        return '<div class="awards-year-card">'
+          + '<div class="awards-year-heading">' + year + '</div>'
+          + '<ul>' + items + '</ul>'
+          + '</div>';
+      }).join('');
+
+      el.innerHTML = '<h2 class="section-title">Awards &amp; Recognition</h2>'
+        + '<div class="awards-grid">' + cards + '</div>';
     }
 
     function renderSlideshow() {
