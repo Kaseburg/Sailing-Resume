@@ -2070,35 +2070,55 @@
     }
 
     const COACHES = [
-      { name: "", program: "", phone: "", email: "" },
-      { name: "", program: "", phone: "", email: "" },
-      { name: "", program: "", phone: "", email: "" },
+      { name: "", program: "", email: "", letterURL: "#" },
+      { name: "", program: "", email: "", letterURL: "#" },
+      { name: "", program: "", email: "", letterURL: "#" },
     ];
 
     function renderCoaches() {
       const el = document.getElementById('coaches-content');
 
+      const tableRows = COACHES.map(function(c) {
+        var letterBtn = c.letterURL
+          ? '<a href="' + c.letterURL + '" target="_blank" rel="noopener" class="btn btn-primary" style="padding:.4rem 1rem;font-size:.8rem;">Letter of Recommendation</a>'
+          : '';
+        return '<tr>'
+          + '<td>' + (c.name || '&nbsp;') + '</td>'
+          + '<td>' + (c.program || '&nbsp;') + '</td>'
+          + '<td>' + (c.email ? '<a href="mailto:' + c.email + '">' + c.email + '</a>' : '&nbsp;') + '</td>'
+          + '<td>' + letterBtn + '</td>'
+          + '</tr>';
+      }).join('');
+
       const cards = COACHES.map(function(c) {
-        return '<div class="contact-card" style="background:var(--color-surface);color:var(--color-text);">'
-          + '<div class="contact-card-heading" style="color:var(--color-text-muted);">Coach Name</div>'
-          + '<div class="contact-card-name">' + (c.name || '&nbsp;') + '</div>'
-          + '<div class="contact-card-line">'
-          + '<span class="contact-card-line-label" style="color:var(--color-text-muted);">Program</span>'
-          + '<span style="color:var(--color-text);">' + (c.program || '&nbsp;') + '</span>'
-          + '</div>'
-          + '<div class="contact-card-line">'
-          + '<span class="contact-card-line-label" style="color:var(--color-text-muted);">Phone</span>'
-          + (c.phone ? '<a href="tel:' + c.phone + '" style="color:var(--color-primary);">' + c.phone + '</a>' : '<span>&nbsp;</span>')
-          + '</div>'
-          + '<div class="contact-card-line">'
-          + '<span class="contact-card-line-label" style="color:var(--color-text-muted);">Email</span>'
-          + (c.email ? '<a href="mailto:' + c.email + '" style="color:var(--color-primary);">' + c.email + '</a>' : '<span>&nbsp;</span>')
-          + '</div>'
+        var letterBtn = c.letterURL
+          ? '<a href="' + c.letterURL + '" target="_blank" rel="noopener" class="btn btn-primary" style="padding:.4rem 1rem;font-size:.8rem;margin-top:.5rem;display:inline-block;">Letter of Recommendation</a>'
+          : '';
+        return '<div class="schedule-card">'
+          + '<div class="schedule-card-name">' + (c.name || '&nbsp;') + '</div>'
+          + '<div class="schedule-card-date">' + (c.program || '&nbsp;') + '</div>'
+          + (c.email ? '<div class="schedule-card-date"><a href="mailto:' + c.email + '">' + c.email + '</a></div>' : '')
+          + letterBtn
           + '</div>';
       }).join('');
 
-      el.innerHTML = '<h2 class="section-title">Coaches &amp; References</h2>'
-        + '<div class="contact-grid">' + cards + '</div>';
+      el.innerHTML = `
+        <h2 class="section-title">Coaches &amp; References</h2>
+        <div class="results-table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Coach Name</th>
+                <th>Program</th>
+                <th>Email</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>${tableRows}</tbody>
+          </table>
+        </div>
+        <div class="results-cards">${cards}</div>
+      `;
     }
 
     function renderSchedule() {
