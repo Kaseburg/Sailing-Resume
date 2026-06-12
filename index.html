@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>[Athlete Name] — Recruit, Class of 2027</title>
-  <meta name="description" content="Recruiting profile for [Athlete Name], Class of 2027 sailing recruit from [School Name]. Skipper/Crew competing in PCISA and ISSA events.">
+  <title>Sean Kaseburg — Sailing Recruit, Class of 2028</title>
+  <meta name="description" content="Recruiting profile for Sean Kaseburg, Class of 2028 sailing recruit from Cathedral Catholic High School. Skipper competing in PCISA and ISSA events.">
 
   <!-- Open Graph tags for link previews when coaches share the URL -->
-  <meta property="og:title" content="[Athlete Name] — Recruit, Class of 2027">
-  <meta property="og:description" content="[Position] · [School Name] · GPA: [X.XX] · SAT: [XXXX]">
-  <meta property="og:image" content="[URL to action photo]">
+  <meta property="og:title" content="Sean Kaseburg — Sailing Recruit, Class of 2028">
+  <meta property="og:description" content="Skipper · Cathedral Catholic · GPA: 4.00 / 4.57">
+  <meta property="og:image" content="images/hero.JPG">
   <meta property="og:url" content="https://kaseburg.github.io/Sailing-Resume">
   <meta property="og:type" content="profile">
 
@@ -1457,25 +1457,25 @@
       honorsCourses: ["English 1 Honors", "Algebra 2 Honors", "Biology Honors", "English 2 Honors", "Spanish 3 Honors", "Chemistry Honors"],
 
       // ── Sailing ────────────────────────────────────────────
-      yearsRacing: "[X]",
-      yearsVarsity: "[X]",
+      yearsRacing: "",
+      yearsVarsity: "",
       teamCaptain: "Yes",
       boatClasses: ["29er", "CFJ", "C420", "Moth", "Snipe", "J22"],
       disciplines: ["Fleet Racing", "Team Racing"],
       trainingAndCoaching: [
-        "[Current HS team + coach name]",
-        "[Club/travel team if applicable]",
-        "[Clinics or camps attended]"
+        "Cathedral Catholic High School Varsity Sailing — Diego Escobar",
+        "San Diego Yacht Club High Performance Team — JJ Fetter",
+        "US Sailing Youth National Team — Phil Mueller"
       ],
       awards: [
-        "[Sailor of the Year or similar]",
-        "[Sportsmanship or leadership award]"
+        "US Sailing Youth National Team (2 consecutive years)",
+        "US Sailing F. Gregg Bemis Trophy"
       ],
 
       // ── Athletics & Activities ─────────────────────────────
-      otherSports: ["[Sport 1 — X years]", "[Sport 2 — X years]"],
-      leadershipRoles: ["[Team captain]", "[Club president]"],
-      communityService: "[Organization, hours/commitment]",
+      otherSports: [],
+      leadershipRoles: ["2026-2027 Team Captain — Cathedral Varsity Sailing (Coach/Peer Voted)"],
+      communityService: "",
 
       // ── About (bio paragraphs) ─────────────────────────────
       aboutText: "I am a high school junior in San Diego, CA, passionate about competitive sailing with extensive experience skippering across a range of boat classes including CFJs, 29ers, C420s, Moths, Snipes and J22s. I strive for excellence academically and have maintained a perfect 4.0 unweighted GPA while sailing 7 days/week.",
@@ -2095,6 +2095,13 @@
 
     function renderSchedule() {
       const el = document.getElementById('schedule-content');
+
+      if (SCHEDULE.length === 0) {
+        el.closest('section').style.display = 'none';
+        var schedLink = document.querySelector('a[href="#schedule"]');
+        if (schedLink) schedLink.closest('li').style.display = 'none';
+        return;
+      }
 
       // Table rows
       const tableRows = SCHEDULE.map(function(s) {
