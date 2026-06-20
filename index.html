@@ -1593,6 +1593,15 @@
     // ║  RENDERING — Builds all HTML from the config above        ║
     // ╚════════════════════════════════════════════════════════════╝
 
+    function triggerDownload(url, filename) {
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
     function renderPage() {
       // ── Update document title & OG tags ──
       document.title = `${ATHLETE.name} — Recruit, Class of ${ATHLETE.classYear}`;
@@ -1677,8 +1686,8 @@
 
         <div class="hero-cta">
           <div class="hero-cta-resume-stack">
-            <a href="${ATHLETE.resumePDF}" class="btn btn-primary" target="_blank" rel="noopener">Sailing Resume PDF Download</a>
-            <a href="${ATHLETE.academicResumePDF}" class="btn btn-primary" target="_blank" rel="noopener">Academic Transcript PDF Download</a>
+            <a href="${ATHLETE.resumePDF}" class="btn btn-primary" target="_blank" rel="noopener" onclick="triggerDownload('${ATHLETE.resumePDF}', 'Sean_Kaseburg_Sailing_Resume.pdf')">Sailing Resume PDF Download</a>
+            <a href="${ATHLETE.academicResumePDF}" class="btn btn-primary" target="_blank" rel="noopener" onclick="triggerDownload('${ATHLETE.academicResumePDF}', 'Sean_Kaseburg_Unofficial_Transcript.pdf')">Academic Transcript PDF Download</a>
           </div>
           <a href="#contact" class="btn btn-outline">Contact Me</a>
         </div>
