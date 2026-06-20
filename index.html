@@ -1384,15 +1384,6 @@
     </section>
 
     <!-- ============================================================
-         EXTRACURRICULARS & LEADERSHIP SECTION
-         ============================================================ -->
-    <section id="athletics-activities" aria-label="Extracurriculars and leadership">
-      <div class="container animate-on-scroll" id="athletics-content">
-        <!-- Populated by JS -->
-      </div>
-    </section>
-
-    <!-- ============================================================
          COACHES & REFERENCES SECTION
          ============================================================ -->
     <section id="coaches" aria-label="Coaches and references">
@@ -1504,8 +1495,8 @@
       parentPhone: "",
 
       // ── Links & Media ─────────────────────────────────────
-      resumePDF: "#",
-      academicResumePDF: "#",
+      resumePDF: "Sean_Kaseburg_Sailing_Resume.pdf",
+      academicResumePDF: "Sean_Kaseburg_Unofficial_Transcript.pdf",
       slideshowImages: [
         "images/slideshow/29erdronesmall.JPG",
         "images/slideshow/coronado29er.jpeg",
@@ -1620,7 +1611,7 @@
       renderAcademics();
       renderResults();
       renderSlideshow();
-      renderAthletics();
+
       renderCoaches();
       renderSchedule();
       renderContact();
@@ -1687,7 +1678,7 @@
         <div class="hero-cta">
           <div class="hero-cta-resume-stack">
             <a href="${ATHLETE.resumePDF}" class="btn btn-primary" target="_blank" rel="noopener">Sailing Resume PDF Download</a>
-            <a href="${ATHLETE.academicResumePDF}" class="btn btn-primary" target="_blank" rel="noopener">Academic Resume PDF Download</a>
+            <a href="${ATHLETE.academicResumePDF}" class="btn btn-primary" target="_blank" rel="noopener">Academic Transcript PDF Download</a>
           </div>
           <a href="#contact" class="btn btn-outline">Contact Me</a>
         </div>
@@ -1772,30 +1763,6 @@
         </div>
         <h3 class="courses-heading">AP &amp; Honors Courses</h3>
         <div class="course-pills">${pills}</div>
-      `;
-    }
-
-    function renderAthletics() {
-      const el = document.getElementById('athletics-content');
-
-      let rows = '';
-
-      if (ATHLETE.leadershipRoles.length > 0) {
-        rows += '<div class="athletics-row">'
-          + '<div class="athletics-label">Leadership Roles</div>'
-          + '<div class="athletics-value">' + ATHLETE.leadershipRoles.join(', ') + '</div>'
-          + '</div>';
-      }
-      if (ATHLETE.communityService) {
-        rows += '<div class="athletics-row">'
-          + '<div class="athletics-label">Community Service</div>'
-          + '<div class="athletics-value">' + ATHLETE.communityService + '</div>'
-          + '</div>';
-      }
-
-      el.innerHTML = `
-        <h2 class="section-title">Extracurriculars &amp; Leadership</h2>
-        <div class="athletics-card">${rows}</div>
       `;
     }
 
